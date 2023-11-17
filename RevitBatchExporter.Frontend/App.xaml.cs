@@ -1,4 +1,5 @@
-﻿using RevitBatchExporter.Frontend.ViewModels;
+﻿using RevitBatchExporter.Frontend.Stores;
+using RevitBatchExporter.Frontend.ViewModels;
 using RevitBatchExporter.Frontend.Views;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,12 @@ namespace RevitBatchExporter.Frontend
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow()
+            NavigationStore navigationStore = new NavigationStore();
+            navigationStore.CurrentViewModel = new HomeViewModel();
+            MainView mainWindow = new MainView()
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainViewModel(navigationStore)
             };
-            this.MainWindow = mainWindow;
             mainWindow.Show();
 
             base.OnStartup(e);

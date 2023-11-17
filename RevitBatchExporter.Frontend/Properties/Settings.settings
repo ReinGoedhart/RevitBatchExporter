@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RevitBatchExporter.Frontend.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SaveDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\RevitBatchExporter\IFC</Value>
+    </Setting>
+    <Setting Name="LogDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\RevitBatchExporter\Log</Value>
+    </Setting>
+    <Setting Name="CreateNewLocalDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\RevitBatchExporter\CreateNewLocal</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

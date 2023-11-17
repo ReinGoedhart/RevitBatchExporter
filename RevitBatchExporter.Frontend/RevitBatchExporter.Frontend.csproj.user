@@ -7,10 +7,39 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\ConfigurationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Loggingview.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ProjectView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Themes\MainTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\MainWindow.xaml">
+    <Page Update="Themes\NavigationButtonTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ConfigurationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Loggingview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProjectView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

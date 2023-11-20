@@ -1,5 +1,6 @@
 ﻿using RevitBatchExporter.Frontend.Commands;
 using RevitBatchExporter.Frontend.MVVM;
+using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,10 @@ namespace RevitBatchExporter.Frontend.ViewModels
         {
             _navigationStore = navigationStore;
 
-            NavigateHome = new NavigateCommand<HomeViewModel>(_navigationStore, () => new HomeViewModel());
-            NavigateProjects= new NavigateCommand<ProjectViewModel>(_navigationStore, () => new ProjectViewModel());
-            NavigateConfiguration = new NavigateCommand<ConfigurationViewModel>(_navigationStore, () => new ConfigurationViewModel());
-            NavigateLogging = new NavigateCommand<LoggingViewModel>(_navigationStore, () => new LoggingViewModel());
+            NavigateHome = new NavigateCommand<HomeViewModel>(new NavigationService<HomeViewModel>(navigationStore, () => new HomeViewModel()));
+            NavigateProjects= new NavigateCommand<ProjectViewModel>(new NavigationService<ProjectViewModel>(navigationStore, () => new ProjectViewModel()));
+            NavigateConfiguration = new NavigateCommand<ConfigurationViewModel>(new NavigationService<ConfigurationViewModel>(navigationStore, () => new ConfigurationViewModel()));
+            NavigateLogging = new NavigateCommand<LoggingViewModel>(new NavigationService<LoggingViewModel>(navigationStore, () => new LoggingViewModel()));
 
 
 

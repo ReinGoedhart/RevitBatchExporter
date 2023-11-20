@@ -10,8 +10,15 @@
     Title="MainWindow"
     Width="800"
     Height="450"
+    Foreground="{StaticResource PrimaryTextColorBrush}"
     mc:Ignorable="d">
-    <Border Background="#272537" CornerRadius="20">
+
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        </Style>
+    </Window.Resources>
+    <Border Background="#272537">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="230" />
@@ -42,28 +49,24 @@
                     Command="{Binding NavigateHome}"
                     Content="Home"
                     FontSize="14"
-                    Foreground="White"
                     Style="{StaticResource NavigationButtonTheme}" />
                 <RadioButton
                     Height="50"
                     Command="{Binding NavigateProjects}"
                     Content="Projects"
                     FontSize="14"
-                    Foreground="White"
                     Style="{StaticResource NavigationButtonTheme}" />
                 <RadioButton
                     Height="50"
                     Command="{Binding NavigateConfiguration}"
                     Content="Configurations"
                     FontSize="14"
-                    Foreground="White"
                     Style="{StaticResource NavigationButtonTheme}" />
                 <RadioButton
                     Height="50"
                     Command="{Binding NavigateLogging}"
                     Content="Log"
                     FontSize="14"
-                    Foreground="White"
                     Style="{StaticResource NavigationButtonTheme}" />
             </StackPanel>
             <Button

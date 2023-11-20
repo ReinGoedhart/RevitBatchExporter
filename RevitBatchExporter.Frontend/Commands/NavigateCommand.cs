@@ -1,4 +1,5 @@
 ﻿using RevitBatchExporter.Frontend.MVVM;
+using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,16 @@ namespace RevitBatchExporter.Frontend.Commands
 
     public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
     {
-        private NavigationStore _navigationStore;
-        private Func<TViewModel> _createViewModel;
+        private readonly NavigationService<TViewModel> _navigationService;
 
-        public NavigateCommand(NavigationStore navigationStore, Func<TViewModel> createViewModel)
+        public NavigateCommand(NavigationService<TViewModel> navigationService)
         {
-            _navigationStore = navigationStore;
-            _createViewModel = createViewModel;
+            _navigationService = navigationService;    
         }
 
         public override void Execute(object parameter)
         {
-            _navigationStore.CurrentViewModel = _createViewModel();
+            _navigationService.Navigate();
         }
     }
 }

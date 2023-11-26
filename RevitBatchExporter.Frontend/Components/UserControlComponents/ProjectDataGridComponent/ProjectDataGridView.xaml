@@ -1,0 +1,114 @@
+﻿<UserControl
+    x:Class="RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent.ProjectDataGridView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Margin="30,0,30,0">
+        <DataGrid
+            Height="auto"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CellStyle="{StaticResource ModernDataGridCellStyle}"
+            HorizontalScrollBarVisibility="Hidden"
+            ItemsSource="{Binding ProjectsCollectionView}"
+            RowStyle="{StaticResource ModernDataGridRowStyle}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            Style="{StaticResource ModernDataGrid}">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn
+                    MinWidth="35"
+                    MaxWidth="35"
+                    Binding="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="False">
+                    <DataGridCheckBoxColumn.ElementStyle>
+                        <Style BasedOn="{StaticResource ModernCheckBoxStyle}" TargetType="CheckBox" />
+                    </DataGridCheckBoxColumn.ElementStyle>
+                    <DataGridCheckBoxColumn.EditingElementStyle>
+                        <Style BasedOn="{StaticResource ModernCheckBoxStyle}" TargetType="CheckBox" />
+                    </DataGridCheckBoxColumn.EditingElementStyle>
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn
+                    MinWidth="40"
+                    MaxWidth="40"
+                    Binding="{Binding Id}"
+                    EditingElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    ElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    Header="Id"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    MinWidth="250"
+                    Binding="{Binding ProjectName}"
+                    EditingElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    ElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    Header="Projectname"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding RevitVersion}"
+                    EditingElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    ElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    Header="Revit version"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding RevitExportType}"
+                    EditingElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    ElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    Header="Export"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding DisplayedViewName}"
+                    EditingElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    ElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    Header="ViewName"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding DisplayedOutputName}"
+                    EditingElementStyle="{StaticResource CenterAlignedDisplayedOutputNameTextBlockError}"
+                    ElementStyle="{StaticResource CenterAlignedDisplayedOutputNameTextBlockError}"
+                    Header="OutputName"
+                    IsReadOnly="True" />
+
+                <DataGridTextColumn
+                    Width="75"
+                    Binding="{Binding DisplayedSaveAfterExport}"
+                    EditingElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    ElementStyle="{StaticResource CenterAlignedTextBlock}"
+                    Header="Sync"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding DisplayedConfigurationPath}"
+                    EditingElementStyle="{StaticResource CenterAlignedDisplayedConfigurationPathTextBlockError}"
+                    ElementStyle="{StaticResource CenterAlignedDisplayedConfigurationPathTextBlockError}"
+                    Header="ConfigurationPath"
+                    IsReadOnly="True" />
+
+                <DataGridTemplateColumn
+                    Width="auto"
+                    MinWidth="100"
+                    Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Width="100"
+                                Height="30"
+                                Command="{Binding EditProject}"
+                                CommandParameter="{Binding}"
+                                Content="Edit"
+                                Style="{StaticResource ModernDataGridButton}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>

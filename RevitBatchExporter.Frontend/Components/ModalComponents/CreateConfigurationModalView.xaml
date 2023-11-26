@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="RevitBatchExporter.Frontend.Components.ModalComponents.CreateConfigurationModalView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RevitBatchExporter.Frontend.Components.ModalComponents"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid>
+        <Border Padding="60" Background="{StaticResource BackgroundColor}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="top">
+                <Label
+                    Margin="0,30,0,10"
+                    Content="Configuration Name"
+                    FontSize="20"
+                    Foreground="White" />
+                <TextBox Style="{StaticResource TextBox}" Text="{Binding ConfigurationNameText}" />
+                <Button
+                    Margin="0,30,0,10"
+                    Padding="10,5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource SecondaryColorBrush}"
+                    Command="{Binding CreateConfiguration}"
+                    Content="Create Configuration"
+                    Style="{StaticResource LargeRoundedButtonTheme}" />
+                <Button
+                    x:Name="btnCloseModal"
+                    Margin="0,0,0,10"
+                    Padding="10,5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource PrimaryColorBrush}"
+                    Command="{Binding Cancel}"
+                    Content="Cancel"
+                    Style="{StaticResource LargeRoundedButtonTheme}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

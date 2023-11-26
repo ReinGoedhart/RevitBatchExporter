@@ -1,0 +1,159 @@
+﻿<UserControl
+    x:Class="RevitBatchExporter.Frontend.Components.ModalComponents.EditProjectModalView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RevitBatchExporter.Frontend.Components.ModalComponents"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Border
+        Width="auto"
+        Height="auto"
+        Background="{StaticResource BackgroundColor}">
+        <StackPanel>
+            <Grid Margin="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="255" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Height="40"
+                    VerticalAlignment="Center"
+                    Content="ViewName"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource TextBox}"
+                    Text="{Binding EditingProject.ViewName}" />
+
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Height="40"
+                    VerticalAlignment="Center"
+                    Content="Sync after export"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <CheckBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Height="25"
+                    Margin="10,10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding EditingProject.SaveAfterExport}" />
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Height="40"
+                    VerticalAlignment="Center"
+                    Content="File saved as"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="250"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource TextBox}"
+                    Text="{Binding EditingProject.OutputName}" />
+
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Height="40"
+                    VerticalAlignment="Center"
+                    Content="Export Type"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <ComboBox
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Width="250"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    DisplayMemberPath="."
+                    ItemsSource="{Binding ExportTypes}"
+                    SelectedItem="{Binding EditingProject.RevitExportType}"
+                    Style="{StaticResource GeneralComboBoxTheme}" />
+
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Height="40"
+                    VerticalAlignment="Center"
+                    Content="Configuration Path"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <Button
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Padding="10,5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource PrimaryColorBrush}"
+                    Command="{Binding SelectJson}"
+                    Content="Choose"
+                    Style="{StaticResource LargeRoundedButtonTheme}" />
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Height="40"
+                    VerticalAlignment="Center"
+                    Content="{Binding EditingProject.ConfigurationPath}"
+                    FontSize="20"
+                    Foreground="{StaticResource SecondaryTextColorBrush}" />
+
+
+
+                <Border
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    BorderBrush="{StaticResource PrimaryTextColorBrush}"
+                    BorderThickness="0,0,0,1" />
+                <StackPanel
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        Margin="0,0,10,0"
+                        Background="{StaticResource PrimaryColorBrush}"
+                        Command="{Binding EditProject}"
+                        Content="Edit project"
+                        Style="{StaticResource LargeRoundedButtonTheme}" />
+                    <Button
+                        Background="{StaticResource SecondaryColorBrush}"
+                        Command="{Binding Cancel}"
+                        Content="X"
+                        DockPanel.Dock="Right"
+                        FontWeight="Bold"
+                        Style="{StaticResource CircleButtonTheme}" />
+                </StackPanel>
+
+
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>

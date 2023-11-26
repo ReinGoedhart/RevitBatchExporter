@@ -1,0 +1,160 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="ModernDataGrid" TargetType="DataGrid">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="RowBackground" Value="Transparent" />
+        <Setter Property="AlternatingRowBackground" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColorBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ColumnHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryTextColorBrush}" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Background" Value="{StaticResource HeaderColor}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource HeaderColor}" />
+                    <Setter Property="Padding" Value="10,10,10,12" />
+                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryTextColorBrush}" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RowHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="DataGridRowHeader">
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryTextColorBrush}" />
+                    <Setter Property="Background" Value="{StaticResource HeaderColor}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource HeaderColor}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ModernDataGridCellStyle" TargetType="DataGridCell">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Height" Value="33" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="ModernDataGridRowStyle" TargetType="DataGridRow">
+        <Setter Property="Background" Value="Transparent" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="Transparent" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsSelected" Value="True" />
+                    <Condition Property="IsKeyboardFocusWithin" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="CenterAlignedTextBlock" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="10,0,10,0" />
+    </Style>
+    <Style x:Key="CenterAlignedDisplayedOutputNameTextBlockError" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="10,0,10,0" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColorBrush}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DisplayedOutputName}" Value="Field required">
+                <Setter Property="Foreground" Value="Red" />
+            </DataTrigger>
+
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="CenterAlignedDisplayedConfigurationPathTextBlockError" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="10,0,10,0" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColorBrush}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DisplayedConfigurationPath}" Value="Field required">
+                <Setter Property="Foreground" Value="Red" />
+            </DataTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="CustomScrollBarStyle" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="#22202f" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <!--  ... Custom template goes here ...  -->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ModernCheckBoxStyle" TargetType="CheckBox">
+
+        <Setter Property="Foreground" Value="#22202f" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <Rectangle
+                            Width="15"
+                            Height="15"
+                            Fill="White"
+                            Stroke="#22202f" />
+                        <ContentPresenter
+                            Margin="0,0,0,4"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Content" Value="x" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="Foreground" Value="#22202f" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ModernDataGridButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColorBrush}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderBrush" Value="#22202f" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource PrimaryColorClickBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

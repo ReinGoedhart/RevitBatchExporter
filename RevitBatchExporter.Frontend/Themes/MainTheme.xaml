@@ -13,5 +13,15 @@
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="#9d98b9" />
     <SolidColorBrush x:Key="SecondaryColorBrush" Color="#FE6584" />
     <SolidColorBrush x:Key="WarningColorBrush" Color="Yellow" />
+    <SolidColorBrush x:Key="BackgroundColor" Color="#272537" />
+    <SolidColorBrush x:Key="HeaderColor" Color="#22202f" />
+    <SolidColorBrush x:Key="PrimaryColorClickBrush" Color="#6c6696" />
+
+    <Style x:Key="MainFontSize" TargetType="Control">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style x:Key="TitleFontSize" TargetType="Control">
+        <Setter Property="FontSize" Value="25" />
+    </Style>
 
 </ResourceDictionary>

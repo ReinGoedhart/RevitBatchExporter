@@ -20,29 +20,35 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
         private INavigationService _createEditProjectModalNavigationService;
         private SelectedProjectStore _selectedProjectStore;
         private ProjectViewModel _vm;
-        public ProjectDataGridViewModel(ProjectViewModel vm, SelectedProjectStore selectedProjectStore, INavigationService createEditProjectModalNavigationService)
+        private ErrorMessagesStore _errorMessagesStore;
+        public ProjectDataGridViewModel(ProjectViewModel vm, SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, INavigationService createEditProjectModalNavigationService)
         {
             _createEditProjectModalNavigationService = createEditProjectModalNavigationService;
             _selectedProjectStore = selectedProjectStore;
+            _errorMessagesStore = errorMessagesStore;
             _vm = vm;
 
             _projectDataGridItemViewModel = new ObservableCollection<ProjectDataGridItemViewModel>();
             _checkedProjects = new List<ProjectDataGridItemViewModel>();
 
+
             ProjectsCollectionView = CollectionViewSource.GetDefaultView(_projectDataGridItemViewModel);
             ProjectsCollectionView.Filter = FilterProjects;
+            
+            GetProjects();
         }
 
-        public void CheckButtonConfigCommand()
+        public void ValidateCreateConfigurationCommand()
         {
             if (!_checkedProjects.Any())
             {
-                System.Windows.MessageBox.Show("Error: No projects selected!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _errorMessagesStore.AddErrorMessage("No projects selected");
+                return;
             }
             var firstRevitVersion = _checkedProjects.First().Project.RevitVersion;
             if (!_checkedProjects.All(p => p.Project.RevitVersion == firstRevitVersion))
             {
-                System.Windows.MessageBox.Show("Error: Not all projects have the same Revit version!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _errorMessagesStore.AddErrorMessage("Not all projects have the same Revit version!");
             }
         }
         // Basic CRUD opererations
@@ -91,9 +97,25 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
                 Region = Enums.Enums.Region.EMEA,
                 ProjectName = "Schiphol"
             };
+            var project2 = new Project()
+            {
+                SaveAfterExport = true,
+                ConfigurationPath = @"C://asdasdasd/asdasdsadasd/asdasdasd",
+                Id = 1,
+                IsVisible = true,
+                OutputName = "asdasdsa!",
+                RevitExportType = Enums.Enums.RevitExportType.IFC,
+                RevitVersion = Enums.Enums.RevitRelease.Revit2022,
+                ViewName = "BIM360",
+                Region = Enums.Enums.Region.EMEA,
+                ProjectName = "Schiphol"
+            };
             var dataGridItem = new ProjectDataGridItemViewModel(project, _vm, _selectedProjectStore, _createEditProjectModalNavigationService);
+            var dataGridItem2 = new ProjectDataGridItemViewModel(project2, _vm, _selectedProjectStore, _createEditProjectModalNavigationService);
             dataGridItem.OnIsCheckedChanged += GridItem_OnIsCheckedChanged;
+            dataGridItem2.OnIsCheckedChanged += GridItem_OnIsCheckedChanged;
             _projectDataGridItemViewModel.Add(dataGridItem);
+            _projectDataGridItemViewModel.Add(dataGridItem2);
 
         }
         // Checkbox changes

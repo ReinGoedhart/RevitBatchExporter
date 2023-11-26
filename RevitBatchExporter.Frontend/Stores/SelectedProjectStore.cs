@@ -9,7 +9,6 @@ namespace RevitBatchExporter.Frontend.Stores
 {
     public class SelectedProjectStore
     {
-        
         public event Action<Project> selectedProjectChanged;
         public void CurrentProject(Project selectedProject)
         {

@@ -29,6 +29,9 @@
             <DataTemplate DataType="{x:Type modalcomponents:DeleteModalViewModel}">
                 <modalcomponents:DeleteModalView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type modalcomponents:ErrorModalViewModel}">
+                <modalcomponents:ErrorModalView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type modalcomponents:EditProjectModalViewModel}">
                 <modalcomponents:EditProjectModalView />
             </DataTemplate>

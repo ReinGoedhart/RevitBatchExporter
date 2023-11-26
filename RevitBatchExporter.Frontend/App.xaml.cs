@@ -23,12 +23,14 @@ namespace RevitBatchExporter.Frontend
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly SelectedProjectStore _selectedProjectStore;
+        private readonly ErrorMessagesStore _errorMessagesStore;
 
         public App()
         {
             _navigationStore = new NavigationStore();
             _modalNavigationStore = new ModalNavigationStore();
             _selectedProjectStore = new SelectedProjectStore();
+            _errorMessagesStore = new ErrorMessagesStore();
         }
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -52,12 +54,7 @@ namespace RevitBatchExporter.Frontend
         // Views
         private INavigationService CreateProjectViewModel()
         {
-            return new NavigationService<ProjectViewModel>(_navigationStore, () => new ProjectViewModel(_selectedProjectStore, CreateDeleteModalViewModel(), CreateConfigurationModalViewModel(), CreateEditProjectModalViewModel()));
-        }
-
-        private INavigationService CreateLoggingViewModel()
-        {
-            return new NavigationService<LoggingViewModel>(_navigationStore, () => new LoggingViewModel());
+            return new NavigationService<ProjectViewModel>(_navigationStore, () => new ProjectViewModel(_selectedProjectStore,_errorMessagesStore, CreateDeleteModalViewModel(), CreateConfigurationModalViewModel(), CreateEditProjectModalViewModel(), CreateErrorModalViewModel()));
         }
         private INavigationService CreateConfigurationViewModel()
         {
@@ -66,6 +63,10 @@ namespace RevitBatchExporter.Frontend
         private INavigationService CreateHomeViewModel()
         {
             return new NavigationService<HomeViewModel>(_navigationStore, () => new HomeViewModel());
+        }
+        private INavigationService CreateLoggingViewModel()
+        {
+            return new NavigationService<LoggingViewModel>(_navigationStore, () => new LoggingViewModel());
         }
 
         // Modals
@@ -78,7 +79,7 @@ namespace RevitBatchExporter.Frontend
         private INavigationService CreateConfigurationModalViewModel()
         {
             CompositeNavigationService CreateConfigurationAndNavigate = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore), CreateConfigurationViewModel());
-            CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore), CreateConfigurationViewModel());
+            CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
 
             return new ModalNavigationService<CreateConfigurationModalViewModel>(_modalNavigationStore, () => new CreateConfigurationModalViewModel(CreateConfigurationAndNavigate, cancel));
         }
@@ -86,6 +87,11 @@ namespace RevitBatchExporter.Frontend
         {
             CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
             return new ModalNavigationService<EditProjectModalViewModel>(_modalNavigationStore, () => new EditProjectModalViewModel(cancel, _selectedProjectStore));
+        }
+        private INavigationService CreateErrorModalViewModel()
+        {
+            CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
+            return new ModalNavigationService<ErrorModalViewModel>(_modalNavigationStore, () => new ErrorModalViewModel(cancel, _errorMessagesStore));
         }
         
 

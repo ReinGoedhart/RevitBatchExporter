@@ -28,9 +28,6 @@ namespace RevitBatchExporter.Frontend.ViewModels
             NavigationBarViewModel = navigationBarViewModel;
             _navigationStore = navigationStore;
             _modalNavigationStore = modelNavigationStore;
-
-
-
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _modalNavigationStore.CurrentViewModelChanged += OnCurrentModalViewModelChanged;
         }

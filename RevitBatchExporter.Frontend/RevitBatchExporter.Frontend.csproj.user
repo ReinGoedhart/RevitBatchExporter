@@ -7,6 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Components\ModalComponents\CreateConfigurationModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\ModalComponents\DeleteModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\ModalComponents\EditProjectModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\ModalComponents\ErrorModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\UserControlComponents\ProjectDataGridComponent\ProjectDataGridView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ConfigurationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -16,15 +31,48 @@
     <Compile Update="Views\Loggingview.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\NavigationBarView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ProjectView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Components\ModalComponents\CreateConfigurationModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\ModalComponents\DeleteModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\ModalComponents\EditProjectModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\ModalComponents\ErrorModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\UserControlComponents\ProjectDataGridComponent\ProjectDataGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\ButtonTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\ComboBoxTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\DataGridTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\ListViewTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\MainTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Themes\NavigationButtonTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\TextboxTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ConfigurationView.xaml">
@@ -37,6 +85,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NavigationBarView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProjectView.xaml">

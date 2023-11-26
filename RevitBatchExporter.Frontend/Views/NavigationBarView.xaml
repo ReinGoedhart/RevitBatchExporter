@@ -1,0 +1,65 @@
+﻿<UserControl
+    x:Class="RevitBatchExporter.Frontend.Views.NavigationBarView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RevitBatchExporter.Frontend.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel
+            Grid.RowSpan="2"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Left">
+            <Border
+                Margin="15,20,15,40"
+                BorderBrush="{StaticResource SecondaryTextColorBrush}"
+                BorderThickness="1"
+                CornerRadius="20">
+                <Label
+                    Padding="25,20,25,25"
+                    HorizontalContentAlignment="Center"
+                    Content="BAM Batch&#10;Exporter"
+                    FontSize="30"
+                    Foreground="white" />
+            </Border>
+            <RadioButton
+                Height="50"
+                Command="{Binding NavigateHome}"
+                Content="Home"
+                FontSize="14"
+                Style="{StaticResource NavigationButtonTheme}" />
+            <RadioButton
+                Height="50"
+                Command="{Binding NavigateProjects}"
+                Content="Projects"
+                FontSize="14"
+                Style="{StaticResource NavigationButtonTheme}" />
+            <RadioButton
+                Height="50"
+                Command="{Binding NavigateConfiguration}"
+                Content="Configurations"
+                FontSize="14"
+                Style="{StaticResource NavigationButtonTheme}" />
+            <RadioButton
+                Height="50"
+                Command="{Binding NavigateLogging}"
+                Content="Log"
+                FontSize="14"
+                Style="{StaticResource NavigationButtonTheme}" />
+        </StackPanel>
+
+        <Button
+            Margin="10,0,0,10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Background="{StaticResource PrimaryColorBrush}">
+            <Image
+                Width="25"
+                Height="25"
+                Margin="0,0,0,0"
+                Source="../Resources/SettingsIcon.png" />
+        </Button>
+
+    </Grid>
+</UserControl>

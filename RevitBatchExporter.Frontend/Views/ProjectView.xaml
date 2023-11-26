@@ -5,8 +5,57 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:RevitBatchExporter.Frontend.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:projectdatagrid="clr-namespace:RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent"
     mc:Ignorable="d">
     <Grid>
-        <Label Content="project" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Margin="20,30,30,20"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Label
+                Margin="20,10,0,-10"
+                Content="Available projects"
+                FontSize="30" />
+            <TextBox
+                Margin="20"
+                HorizontalAlignment="Left"
+                Style="{StaticResource SearchTextBox}"
+                Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" />
+            <Button
+                x:Name="btnShowModal"
+                Background="{StaticResource PrimaryColorBrush}"
+                Command="{Binding CreateConfigurationModal}"
+                Content="Create configuration"
+                Style="{StaticResource LargeRoundedButtonTheme}" />
+            <Button
+                Margin="10,0,0,0"
+                Background="{StaticResource PrimaryColorBrush}"
+                Command="{Binding DuplicateProject}"
+                Content="Duplicate selection"
+                Style="{StaticResource LargeRoundedButtonTheme}" />
+            <Button
+                Margin="10,0,0,0"
+                Background="{StaticResource SecondaryColorBrush}"
+                Command="{Binding DeleteModal}"
+                Content="Delete selection"
+                Style="{StaticResource LargeRoundedButtonTheme}" />
+            <Button
+                Margin="10,0,0,0"
+                Background="{StaticResource PrimaryColorBrush}"
+                Command="{Binding RefreshData}"
+                Style="{StaticResource CircleButtonTheme}">
+                <Image
+                    Width="25"
+                    Height="25"
+                    Margin="0,0,0,0"
+                    Source="../Resources/RefreshWhiteIcon.png" />
+            </Button>
+        </StackPanel>
+        <projectdatagrid:ProjectDataGridView Grid.Row="1" DataContext="{Binding ProjectDataGridViewModel}" />
     </Grid>
 </UserControl>

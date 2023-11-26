@@ -15,5 +15,7 @@ namespace RevitBatchExporter.Frontend.MVVM
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        
     }
 }

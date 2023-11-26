@@ -11,28 +11,34 @@ using System.Windows.Input;
 
 namespace RevitBatchExporter.Frontend.ViewModels
 {
-    public class MainViewModel: ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
 
-        private NavigationStore _navigationStore;
+        private readonly NavigationStore _navigationStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-        public ICommand NavigateLogging {  get; }
-        public ICommand NavigateConfiguration {  get; }
-        public ICommand NavigateProjects {  get; }
-        public ICommand NavigateHome {  get; }
-        public MainViewModel(NavigationStore navigationStore)
+        public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
+        public NavigationBarViewModel NavigationBarViewModel { get; set; }
+        public bool IsOpen => _modalNavigationStore.IsOpen;
+        public MainViewModel(
+            NavigationStore navigationStore, 
+            ModalNavigationStore modelNavigationStore,NavigationBarViewModel navigationBarViewModel
+            )
         {
+            NavigationBarViewModel = navigationBarViewModel;
             _navigationStore = navigationStore;
-
-            NavigateHome = new NavigateCommand<HomeViewModel>(new NavigationService<HomeViewModel>(navigationStore, () => new HomeViewModel()));
-            NavigateProjects= new NavigateCommand<ProjectViewModel>(new NavigationService<ProjectViewModel>(navigationStore, () => new ProjectViewModel()));
-            NavigateConfiguration = new NavigateCommand<ConfigurationViewModel>(new NavigationService<ConfigurationViewModel>(navigationStore, () => new ConfigurationViewModel()));
-            NavigateLogging = new NavigateCommand<LoggingViewModel>(new NavigationService<LoggingViewModel>(navigationStore, () => new LoggingViewModel()));
+            _modalNavigationStore = modelNavigationStore;
 
 
 
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            _modalNavigationStore.CurrentViewModelChanged += OnCurrentModalViewModelChanged;
+        }
 
+        private void OnCurrentModalViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentModalViewModel));
+            OnPropertyChanged(nameof(IsOpen));
         }
 
         private void OnCurrentViewModelChanged()

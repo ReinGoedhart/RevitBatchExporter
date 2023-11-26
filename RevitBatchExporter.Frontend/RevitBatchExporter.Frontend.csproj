@@ -8,10 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Components\ModalComponents\" />
-    <Folder Include="Components\UserControlComponents\" />
-    <Folder Include="Models\" />
     <Folder Include="Converters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SimpleModal.WPF" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

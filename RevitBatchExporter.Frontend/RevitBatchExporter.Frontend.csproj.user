@@ -19,6 +19,15 @@
     <Compile Update="Components\ModalComponents\ErrorModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Components\ModalComponents\ExportModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\UserControlComponents\ConfigurationItemsControlComponent\ConfigurationItemsControlView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\UserControlComponents\ConfigurationListViewComponent\ConfigurationListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\UserControlComponents\ProjectDataGridComponent\ProjectDataGridView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +58,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\ModalComponents\ErrorModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\ModalComponents\ExportModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\UserControlComponents\ConfigurationItemsControlComponent\ConfigurationItemsControlView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\UserControlComponents\ConfigurationListViewComponent\ConfigurationListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\UserControlComponents\ProjectDataGridComponent\ProjectDataGridView.xaml">

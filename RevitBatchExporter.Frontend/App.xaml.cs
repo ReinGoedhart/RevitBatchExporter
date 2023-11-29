@@ -1,5 +1,6 @@
 ﻿using RevitBatchExporter.Frontend.Components.ModalComponents;
 using RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent;
+using RevitBatchExporter.Frontend.Models;
 using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.ViewModels;
@@ -23,6 +24,7 @@ namespace RevitBatchExporter.Frontend
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly SelectedProjectStore _selectedProjectStore;
+        private readonly SelectedConfigurationStore _selectedConfigurationStore;
         private readonly ErrorMessagesStore _errorMessagesStore;
 
         public App()
@@ -31,6 +33,7 @@ namespace RevitBatchExporter.Frontend
             _modalNavigationStore = new ModalNavigationStore();
             _selectedProjectStore = new SelectedProjectStore();
             _errorMessagesStore = new ErrorMessagesStore();
+            _selectedConfigurationStore = new SelectedConfigurationStore();
         }
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -54,11 +57,12 @@ namespace RevitBatchExporter.Frontend
         // Views
         private INavigationService CreateProjectViewModel()
         {
-            return new NavigationService<ProjectViewModel>(_navigationStore, () => new ProjectViewModel(_selectedProjectStore,_errorMessagesStore, CreateDeleteModalViewModel(), CreateConfigurationModalViewModel(), CreateEditProjectModalViewModel(), CreateErrorModalViewModel()));
+            return new NavigationService<ProjectViewModel>(_navigationStore, () => new ProjectViewModel(_selectedProjectStore,_errorMessagesStore, CreateDeleteModalViewModel("Delete project"), CreateConfigurationModalViewModel(), CreateEditProjectModalViewModel(), CreateErrorModalViewModel()));
         }
         private INavigationService CreateConfigurationViewModel()
         {
-            return new NavigationService<ConfigurationViewModel>(_navigationStore, () => new ConfigurationViewModel());
+            return new NavigationService<ConfigurationViewModel>(_navigationStore, () => 
+            new ConfigurationViewModel(_selectedConfigurationStore, _errorMessagesStore, CreateDeleteModalViewModel("Delete configuration"), CreateErrorModalViewModel(), ExportModalViewModel())); ;
         }
         private INavigationService CreateHomeViewModel()
         {
@@ -70,30 +74,30 @@ namespace RevitBatchExporter.Frontend
         }
 
         // Modals
-        private INavigationService CreateDeleteModalViewModel()
+        private INavigationService CreateDeleteModalViewModel(string deleteTitle)
         {
-            CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
-
-            return new ModalNavigationService<DeleteModalViewModel>(_modalNavigationStore, () => new DeleteModalViewModel(cancel));
+            return new ModalNavigationService<DeleteModalViewModel>(_modalNavigationStore, () => new DeleteModalViewModel(CreateCancelCompositeNavigationService(), deleteTitle));
         }
         private INavigationService CreateConfigurationModalViewModel()
         {
             CompositeNavigationService CreateConfigurationAndNavigate = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore), CreateConfigurationViewModel());
-            CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
-
-            return new ModalNavigationService<CreateConfigurationModalViewModel>(_modalNavigationStore, () => new CreateConfigurationModalViewModel(CreateConfigurationAndNavigate, cancel));
+            return new ModalNavigationService<CreateConfigurationModalViewModel>(_modalNavigationStore, () => new CreateConfigurationModalViewModel(CreateConfigurationAndNavigate, CreateCancelCompositeNavigationService()));
         }
         private INavigationService CreateEditProjectModalViewModel()
         {
-            CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
-            return new ModalNavigationService<EditProjectModalViewModel>(_modalNavigationStore, () => new EditProjectModalViewModel(cancel, _selectedProjectStore));
+            return new ModalNavigationService<EditProjectModalViewModel>(_modalNavigationStore, () => new EditProjectModalViewModel(CreateCancelCompositeNavigationService(), _selectedProjectStore));
         }
         private INavigationService CreateErrorModalViewModel()
         {
-            CompositeNavigationService cancel = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
-            return new ModalNavigationService<ErrorModalViewModel>(_modalNavigationStore, () => new ErrorModalViewModel(cancel, _errorMessagesStore));
+            return new ModalNavigationService<ErrorModalViewModel>(_modalNavigationStore, () => new ErrorModalViewModel(CreateCancelCompositeNavigationService(), _errorMessagesStore));
+        } 
+        private INavigationService ExportModalViewModel()
+        {
+            return new ModalNavigationService<ExportModalViewModel>(_modalNavigationStore, () => new ExportModalViewModel(CreateCancelCompositeNavigationService()));
         }
-        
-
+        private CompositeNavigationService CreateCancelCompositeNavigationService()
+        {
+            return new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore));
+        }
     }
 }

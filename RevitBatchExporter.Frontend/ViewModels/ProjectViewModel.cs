@@ -36,6 +36,7 @@ namespace RevitBatchExporter.Frontend.ViewModels
 
         public void CanCreateConfigurationModal()
         {
+            _errorMessagesStore.ClearErrorMessages();
             ProjectDataGridViewModel.ValidateCreateConfigurationCommand();
             if (_errorMessagesStore.CurrentErrorMessages.Count > 0)
             {

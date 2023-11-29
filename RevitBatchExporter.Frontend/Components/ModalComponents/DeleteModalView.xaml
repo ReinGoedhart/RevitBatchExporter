@@ -17,7 +17,7 @@
                     HorizontalAlignment="Center"
                     Content="Are you sure?"
                     FontSize="20"
-                    Foreground="White" />
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
                 <Button
                     Margin="0,30,0,10"
                     Padding="10,5"
@@ -25,7 +25,7 @@
                     VerticalAlignment="Center"
                     Background="{StaticResource SecondaryColorBrush}"
                     Command="{Binding DeleteProjects}"
-                    Content="Delete projects"
+                    Content="{Binding DeleteTitle}"
                     Style="{StaticResource LargeRoundedButtonTheme}" />
                 <Button
                     Padding="10,5"

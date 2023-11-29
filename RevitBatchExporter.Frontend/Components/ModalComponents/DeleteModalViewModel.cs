@@ -14,9 +14,10 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
 
         public ICommand DeleteProjects { get; }
         public ICommand Cancel { get; }
-
-        public DeleteModalViewModel(CompositeNavigationService cancel)
+        public string DeleteTitle { get; set; }
+        public DeleteModalViewModel(CompositeNavigationService cancel, string deleteTitle)
         {
+            DeleteTitle = deleteTitle;
             DeleteProjects = new RelayCommand(() => { cancel.Navigate(); }); // create Logic
             Cancel = new RelayCommand(() => { cancel.Navigate(); });
         }

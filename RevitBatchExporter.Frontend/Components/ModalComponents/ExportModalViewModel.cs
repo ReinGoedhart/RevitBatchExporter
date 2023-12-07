@@ -138,7 +138,7 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
         public ExportModalViewModel(INavigationService abortNavigationService)
         {
             IsModalOpen = false;
-            CloseModalCommand = new RelayCommand(CloseModal);
+            CloseModalCommand = new RelayCommand(() => abortNavigationService.Navigate());
         }
         private string _error;
         public string Error

@@ -28,15 +28,19 @@ namespace RevitBatchExporter.Frontend.ViewModels
         public Configuration SelectedConfiguration => _selectedConfigurationStore.SelectedConfiguration;
         public bool HasSelectedConfiguration => SelectedConfiguration != null;
 
+        DeleteObjectsStore _deleteObjectsStore;
         //public ConfigurationService ConfigurationService { get; set; }
         public ConfigurationViewModel(
             SelectedConfigurationStore selectedConfigurationStore,
             ErrorMessagesStore errorMessagesStore,
+            CreateConfigurationStore createConfigurationStore,
+            DeleteObjectsStore deleteObjectsStore,
             INavigationService deleteModalNavigationService,
             INavigationService errorModalNavigationService,
             INavigationService exportModalNavigationService)
         {
             //ConfigurationService = new ConfigurationService();
+            _deleteObjectsStore = deleteObjectsStore;
             _deleteModalNavigationService = deleteModalNavigationService;
             _errorModalNavigationService = errorModalNavigationService;
             _exportModalNavigationService = exportModalNavigationService;
@@ -44,10 +48,10 @@ namespace RevitBatchExporter.Frontend.ViewModels
             _errorMessagesStore = errorMessagesStore;
 
             ConfigurationListingViewModel = new ConfigurationListViewModel(_selectedConfigurationStore);
-            ConfigurationItemsControlViewModel = new ConfigurationItemsControlViewModel(_selectedConfigurationStore);
+            ConfigurationItemsControlViewModel = new ConfigurationItemsControlViewModel(_selectedConfigurationStore, createConfigurationStore, _deleteObjectsStore);
 
             DeleteConfiguration = new DeleteConfigurationCommand(this, _deleteModalNavigationService);
-            BeginExport = new BeginExportCommand(this,_errorMessagesStore, _exportModalNavigationService, _errorModalNavigationService);
+            BeginExport = new BeginExportCommand(this, _errorMessagesStore, _exportModalNavigationService, _errorModalNavigationService);
 
             _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
         }

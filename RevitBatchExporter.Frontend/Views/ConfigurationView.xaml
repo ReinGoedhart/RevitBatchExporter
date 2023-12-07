@@ -54,7 +54,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" MaxWidth="500" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <Border
                 Grid.RowSpan="2"
@@ -117,7 +117,12 @@
                         </Style>
                     </Grid.Style>
 
-                    <TextBlock Grid.Row="0" Text="Please select a configuration" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,30,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="20"
+                        Text="Please select a configuration" />
                 </Grid>
 
 
@@ -132,17 +137,17 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <configurationlistviewcomponent:ConfigurationListView DataContext="{Binding ConfigurationProjectListingViewModel}" />
+                    <configurationlistviewcomponent:ConfigurationListView DataContext="{Binding ConfigurationListingViewModel}" />
+                    <Button
+                        Grid.Row="3"
+                        Margin="20,0,0,40"
+                        VerticalAlignment="Bottom"
+                        Background="{StaticResource PrimaryColorBrush}"
+                        Command="{Binding BeginExport}"
+                        Content="Start Exporting"
+                        Style="{StaticResource LargeRoundedButtonTheme}" />
                 </Grid>
 
-                <Button
-                    Grid.Row="3"
-                    Margin="20,0,0,40"
-                    VerticalAlignment="Bottom"
-                    Background="{StaticResource PrimaryColorBrush}"
-                    Command="{Binding BeginExport}"
-                    Content="Start Exporting"
-                    Style="{StaticResource LargeRoundedButtonTheme}" />
             </Grid>
         </Grid>
     </Grid>

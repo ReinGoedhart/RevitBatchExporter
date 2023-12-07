@@ -7,7 +7,7 @@ using static RevitBatchExporter.Frontend.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Models
 {
-    public class Project
+    public class Project 
     {
         public int Id { get; set; }
         public bool IsVisible { get; set; }

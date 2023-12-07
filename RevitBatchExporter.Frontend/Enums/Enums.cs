@@ -28,5 +28,11 @@ namespace RevitBatchExporter.Frontend.Enums
             US = 2,
             LOCAL = 3,
         }
+        public enum Classes
+        {
+            Project = 1,
+            Configuration = 2,
+            Log = 3,
+        }
     }
 }

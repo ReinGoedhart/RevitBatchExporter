@@ -13,27 +13,26 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
 {
     public class ConfigurationListViewModel: ViewModelBase
     {
-        private ConfigurationViewModel _vm;
-        private Configuration _currentConfiguration;
+        public Configuration CurrentConfiguration { get; set; }
 
         private readonly ObservableCollection<ConfigurationListItemViewModel> _configurationProjectListingItemViewModel;
         public IEnumerable<ConfigurationListItemViewModel> ConfigurationProjectListingItemViewModel => _configurationProjectListingItemViewModel;
-  
+
+        private SelectedConfigurationStore _selectedConfigurationStore;
         public ConfigurationListViewModel(SelectedConfigurationStore selectedConfigurationStore)
         {
+            _selectedConfigurationStore = selectedConfigurationStore;
             _configurationProjectListingItemViewModel = new ObservableCollection<ConfigurationListItemViewModel>();
-            selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
+            
+            _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
         }
 
         private void OnConfigurationChanged(Configuration currentConfiguration)
         {
+            CurrentConfiguration = currentConfiguration;
+            OnPropertyChanged(nameof(CurrentConfiguration));
 
             //populate(currentConfiguration);
-        }
-
-        public Configuration GetCurrentConfiguration()
-        {
-            return _currentConfiguration;
         }
 
         private Configuration populate(Configuration currentConfiguration)

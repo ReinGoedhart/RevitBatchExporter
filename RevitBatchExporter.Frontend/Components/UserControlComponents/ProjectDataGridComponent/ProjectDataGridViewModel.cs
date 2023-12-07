@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.Services;
+using static RevitBatchExporter.Frontend.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent
 {
@@ -21,8 +22,10 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
         private SelectedProjectStore _selectedProjectStore;
         private ProjectViewModel _vm;
         private ErrorMessagesStore _errorMessagesStore;
-        public ProjectDataGridViewModel(ProjectViewModel vm, SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, INavigationService createEditProjectModalNavigationService)
+        private DeleteObjectsStore _deleteObjectsStore;
+        public ProjectDataGridViewModel(ProjectViewModel vm, SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, INavigationService createEditProjectModalNavigationService)
         {
+            _deleteObjectsStore = deleteObjectsStore;
             _createEditProjectModalNavigationService = createEditProjectModalNavigationService;
             _selectedProjectStore = selectedProjectStore;
             _errorMessagesStore = errorMessagesStore;
@@ -34,8 +37,29 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
 
             ProjectsCollectionView = CollectionViewSource.GetDefaultView(_projectDataGridItemViewModel);
             ProjectsCollectionView.Filter = FilterProjects;
-            
+
             GetProjects();
+
+            _deleteObjectsStore.OnDeleteProject += OnDeletedProjects;
+
+        }
+
+        private void OnDeletedProjects()
+        {
+            List<ProjectDataGridItemViewModel> itemsToRemove = new List<ProjectDataGridItemViewModel>();
+
+            foreach (var projectItem in _projectDataGridItemViewModel)
+            {
+                if (_checkedProjects.Contains(projectItem))
+                {
+                    itemsToRemove.Add(projectItem);
+                }
+            }
+
+            foreach (var itemToRemove in itemsToRemove)
+            {
+                _projectDataGridItemViewModel.Remove(itemToRemove);
+            }
         }
 
         public void ValidateCreateConfigurationCommand()
@@ -53,15 +77,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
         }
         // Basic CRUD opererations
         private readonly ObservableCollection<ProjectDataGridItemViewModel> _projectDataGridItemViewModel;
-        public void DeleteProjectsCommand()
-        {
-            foreach (var item in _checkedProjects)
-            {
-                //_vm.GetProjectService().Delete(item.Project.Id);
-            }
-            GetProjects();
-            _checkedProjects.Clear();
-        }
+        
         public void DuplicateProjectCommand()
         {
             foreach (var project in _checkedProjects)

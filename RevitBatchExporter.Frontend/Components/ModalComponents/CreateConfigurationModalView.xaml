@@ -21,7 +21,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="{StaticResource SecondaryColorBrush}"
-                    Command="{Binding CreateConfiguration}"
+                    Command="{Binding CreateAndNavigate}"
                     Content="Create Configuration"
                     Style="{StaticResource LargeRoundedButtonTheme}" />
                 <Button

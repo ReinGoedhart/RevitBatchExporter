@@ -29,6 +29,7 @@ namespace RevitBatchExporter.Frontend
         private readonly ErrorMessagesStore _errorMessagesStore;
         private readonly CreateConfigurationStore _createConfigurationStore;
         private readonly DeleteObjectsStore _deleteObjectsStore;
+        private readonly SelectedLogFileStore _selectedLogFileStore;
 
 
         public App()
@@ -40,6 +41,7 @@ namespace RevitBatchExporter.Frontend
             _selectedConfigurationStore = new SelectedConfigurationStore();
             _createConfigurationStore = new CreateConfigurationStore();
             _deleteObjectsStore = new DeleteObjectsStore();
+            _selectedLogFileStore = new SelectedLogFileStore();
         }
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -76,13 +78,16 @@ namespace RevitBatchExporter.Frontend
         }
         private INavigationService CreateLoggingViewModel()
         {
-            return new NavigationService<LoggingViewModel>(_navigationStore, () => new LoggingViewModel());
+            return new NavigationService<LoggingViewModel>(_navigationStore, () => new LoggingViewModel(_selectedLogFileStore, CreateDeleteLoggingModalViewModel("Delete log file")));
         }
-
         // Modals
         private INavigationService CreateDeleteConfigurationModalViewModel(string deleteTitle)
         {
             return new ModalNavigationService<DeleteModalViewModel>(_modalNavigationStore, () => new DeleteModalViewModel(_deleteObjectsStore, CreateCancelCompositeNavigationService(), deleteTitle, Classes.Configuration));
+        }
+        private INavigationService CreateDeleteLoggingModalViewModel(string deleteTitle)
+        {
+            return new ModalNavigationService<DeleteModalViewModel>(_modalNavigationStore, () => new DeleteModalViewModel(_deleteObjectsStore, CreateCancelCompositeNavigationService(), deleteTitle, Classes.Log));
         }
         private INavigationService CreateDeleteProjectsModalViewModel(string deleteTitle)
         {

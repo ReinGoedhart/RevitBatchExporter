@@ -7,33 +7,36 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
-        <Border Padding="60" Background="{StaticResource BackgroundColor}">
+        <Border Padding="30,30,30,30" Background="{StaticResource BackgroundColor}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="top">
                 <Label
-                    Margin="0,30,0,10"
-                    Content="Configuration Name"
-                    FontSize="20"
-                    Foreground="White" />
-                <TextBox Style="{StaticResource TextBox}" Text="{Binding ConfigurationNameText}" />
-                <Button
-                    Margin="0,30,0,10"
-                    Padding="10,5"
+                    Margin="0,10,0,40"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="{StaticResource SecondaryColorBrush}"
-                    Command="{Binding CreateAndNavigate}"
                     Content="Create Configuration"
-                    Style="{StaticResource LargeRoundedButtonTheme}" />
-                <Button
-                    x:Name="btnCloseModal"
-                    Margin="0,0,0,10"
-                    Padding="10,5"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="{StaticResource PrimaryColorBrush}"
-                    Command="{Binding Cancel}"
-                    Content="Cancel"
-                    Style="{StaticResource LargeRoundedButtonTheme}" />
+                    FontSize="25"
+                    Foreground="White" />
+                <TextBox Style="{StaticResource ConfigurationTextBox}" Text="{Binding ConfigurationNameText}" />
+
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <Button
+                        Margin="0,0,10,0"
+                        Padding="10,5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="{StaticResource SecondaryColorBrush}"
+                        Command="{Binding CreateAndNavigate}"
+                        Content="Create Configuration"
+                        Style="{StaticResource LargeRoundedButtonTheme}" />
+                    <Button
+                        x:Name="btnCloseModal"
+                        Padding="10,5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="{StaticResource PrimaryColorBrush}"
+                        Command="{Binding Cancel}"
+                        Content="Cancel"
+                        Style="{StaticResource LargeRoundedButtonTheme}" />
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>

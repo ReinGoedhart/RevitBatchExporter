@@ -18,6 +18,8 @@ namespace RevitBatchExporter.Frontend.ViewModels
         public ProjectDataGridViewModel ProjectDataGridViewModel { get; set; }
         public ICommand DeleteModal { get; }
         public ICommand CreateConfigurationModal { get; }
+        public ICommand DuplicateProject { get; }
+
         public INavigationService _createConfigurationModalNavigationService;
         public INavigationService _errorModalNavigationService;
         private ErrorMessagesStore _errorMessagesStore;
@@ -28,10 +30,27 @@ namespace RevitBatchExporter.Frontend.ViewModels
             _createConfigurationModalNavigationService = createConfigurationModalNavigationService;
             _errorModalNavigationService = errorModalNavigationService;
 
-            ProjectDataGridViewModel = new ProjectDataGridViewModel(this, selectedProjectStore, errorMessagesStore, deleteObjectsStore, editProjectModalNavigationService);
-            
+            ProjectDataGridViewModel = new ProjectDataGridViewModel(selectedProjectStore, errorMessagesStore, deleteObjectsStore, editProjectModalNavigationService);
+
+            DuplicateProject = new DuplicateProjectCommand(this);
             DeleteModal = new NavigateCommand(deleteModalNavigationService);
             CreateConfigurationModal = new CreateConfigurationModalCommand(_errorMessagesStore, _errorModalNavigationService, _createConfigurationModalNavigationService, ProjectDataGridViewModel);
         }
+
+        private string _searchString;
+        public string SearchString
+        {
+            get
+            {
+                return _searchString;
+            }
+            set
+            {
+                _searchString = value;
+                ProjectDataGridViewModel.UpdateProjectCollectionWithSearchValue(value);
+                OnPropertyChanged(nameof(SearchString));
+            }
+        }
+
     }
 }

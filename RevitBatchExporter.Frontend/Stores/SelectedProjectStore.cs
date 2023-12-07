@@ -9,10 +9,18 @@ namespace RevitBatchExporter.Frontend.Stores
 {
     public class SelectedProjectStore
     {
+        public Project CurrentSelectedProject { get; set; }
         public event Action<Project> selectedProjectChanged;
         public void CurrentProject(Project selectedProject)
         {
             selectedProjectChanged?.Invoke(selectedProject);
         }
+        public event Action<Project> ProjectIsEdited;
+        public void ProjectEdited(Project editedProject)
+        {
+            ProjectIsEdited(editedProject);
+        }
+
+
     }
 }

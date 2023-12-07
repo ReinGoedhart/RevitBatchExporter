@@ -19,13 +19,19 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
         public Project EditingProject { get; set; }
         public ICommand EditProject { get; }
         public ICommand Cancel { get; }
-        public EditProjectModalViewModel(CompositeNavigationService cancel, SelectedProjectStore selectedProjectStore)
+        public EditProjectModalViewModel(INavigationService cancel, SelectedProjectStore selectedProjectStore)
         {
             _selectedProjectStore = selectedProjectStore;
-            EditProject = new RelayCommand(() => { cancel.Navigate(); }); // create Logic
+            EditProject = new RelayCommand(() => 
+            { 
+                cancel.Navigate(); 
+                _selectedProjectStore.ProjectEdited(EditingProject); 
+            });
             Cancel = new RelayCommand(() => { cancel.Navigate(); });
             _selectedProjectStore.selectedProjectChanged += SelectedProjectStore_selectedProjectChanged;
         }
+
+
         private void SelectedProjectStore_selectedProjectChanged(Project obj)
         {
             if (obj != null)

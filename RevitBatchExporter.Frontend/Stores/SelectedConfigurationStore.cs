@@ -9,7 +9,7 @@ namespace RevitBatchExporter.Frontend.Stores
 {
     public class SelectedConfigurationStore
     {
-        public Configuration SelectedConfiguration { get; set; }
+        public Configuration? SelectedConfiguration { get; set; }
         public event Action<Configuration> ConfigurationChanged;
         public SelectedConfigurationStore()
         {

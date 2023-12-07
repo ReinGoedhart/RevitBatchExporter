@@ -54,6 +54,14 @@ namespace RevitBatchExporter.Frontend.ViewModels
             BeginExport = new BeginExportCommand(this, _errorMessagesStore, _exportModalNavigationService, _errorModalNavigationService);
 
             _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
+            _deleteObjectsStore.OnDeleteConfiguration += _deleteObjectsStore_OnDeleteConfiguration;
+        }
+
+        private void _deleteObjectsStore_OnDeleteConfiguration()
+        {
+            _selectedConfigurationStore.SelectedConfiguration = null;
+            OnPropertyChanged(nameof(SelectedConfiguration));
+            OnPropertyChanged(nameof(HasSelectedConfiguration));
         }
 
         private void OnConfigurationChanged(Configuration configuration)

@@ -81,9 +81,8 @@
             </StackPanel>
             <Button
                 Grid.Row="2"
-                Padding="10,5"
+                Margin="0,30,0,0"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
                 Background="{StaticResource SecondaryColorBrush}"
                 Command="{Binding CloseModalCommand}"
                 Content="{Binding ButtonText}"

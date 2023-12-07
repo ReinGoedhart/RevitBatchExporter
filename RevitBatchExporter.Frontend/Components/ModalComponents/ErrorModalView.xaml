@@ -41,9 +41,9 @@
             <Border
                 Grid.Row="1"
                 Grid.ColumnSpan="2"
-                Background="{StaticResource SecondaryColorBrush}"
-                BorderBrush="{StaticResource PrimaryTextColorBrush}"
-                BorderThickness="1"
+                Background="{StaticResource PrimaryTextColorBrush}"
+                BorderBrush="{StaticResource SecondaryColorBrush}"
+                BorderThickness="3"
                 CornerRadius="5">
                 <Grid>
                     <ListView
@@ -60,7 +60,7 @@
                                     <TextBlock
                                         Grid.Column="0"
                                         MaxWidth="800"
-                                        Padding="0"
+                                        Padding="7"
                                         FontSize="15"
                                         Foreground="{StaticResource BackgroundColor}"
                                         Text="{Binding}"

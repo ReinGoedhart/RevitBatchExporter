@@ -20,13 +20,11 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
         private SelectedProjectStore _selectedProjectStore { get; set; }
         public ICommand SelectionChangedCommand { get; private set; }
         private INavigationService _createEditProjectModalNavigationService;
-        private ProjectViewModel _vm;
-        public ProjectDataGridItemViewModel(Project project, ProjectViewModel vm, SelectedProjectStore selectedProjectStore, INavigationService createEditProjectModalNavigationService)
+        public ProjectDataGridItemViewModel(Project project, SelectedProjectStore selectedProjectStore, INavigationService createEditProjectModalNavigationService)
         {
             _createEditProjectModalNavigationService = createEditProjectModalNavigationService;
             _selectedProjectStore = selectedProjectStore; 
             Project = project;
-            _vm = vm;
             RevitRelease release = project.RevitVersion;
             RevitVersion = (int)release;
             EditProject = new RelayCommand(OpenModalCommand);
@@ -54,7 +52,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
             get
             {
                 if (this.RevitExportType == RevitExportType.SYNCONLY)
-                    return string.Empty; // Or string.Empty, depending on how you want to handle this case in your UI.
+                    return string.Empty; 
                 else
                     return Project.SaveAfterExport.ToString();
             }
@@ -110,10 +108,6 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
         {
             _createEditProjectModalNavigationService.Navigate();
             _selectedProjectStore.CurrentProject(Project);
-            //_vm.EditProjectModalViewModel.OpenModal();
-            //_vm.EditProjectModalViewModel.ProjectsDataGridViewModel = _vm.ProjectsDataGridViewModel;
-            //_vm.EditProjectModalViewModel.EditingProject = Project;
-            //_vm.EditProjectModalViewModel.ProjectService = _vm._projectService;
         }
     }
 }

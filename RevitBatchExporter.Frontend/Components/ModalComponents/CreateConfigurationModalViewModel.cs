@@ -20,6 +20,20 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
         INavigationService _createConfigurationAndNavigate;
         CreateConfigurationStore _createConfigurationStore;
 
+        private string _configurationNameText;
+        public string ConfigurationNameText
+        {
+            get
+            {
+                return _configurationNameText;
+            }
+            set
+            {
+                _configurationNameText = value;
+                OnPropertyChanged(nameof(ConfigurationNameText));
+            }
+        }
+
         public CreateConfigurationModalViewModel(CompositeNavigationService createConfigurationAndNavigate, CompositeNavigationService cancel, CreateConfigurationStore createConfigurationStore)
         {
             _createConfigurationStore = createConfigurationStore;
@@ -32,7 +46,7 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
         {
             Configuration configuration = new Configuration()
             {
-                ConfigurationName = "New Config",
+                ConfigurationName = ConfigurationNameText,
                 Id = 3,
                 RevitVersion = RevitRelease.Revit2021
             };

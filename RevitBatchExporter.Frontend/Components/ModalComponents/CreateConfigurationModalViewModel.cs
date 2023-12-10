@@ -52,7 +52,6 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
             };
             _createConfigurationAndNavigate.Navigate();
             _createConfigurationStore.CreateConfiguration(configuration);
-
         }
     }
 }

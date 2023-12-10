@@ -43,6 +43,15 @@ namespace RevitBatchExporter.Frontend.ViewModels
             }
         }
 
+        public override void Dispose()
+        {
+            _deleteObjectsStore.OnDeleteLog -= DeleteObjectsStore_OnDeleteLog;
+            _selectedLogFileStore.selectedLogFileChanged -= _selectedLogFileStore_selectedLogFileChanged;
+            LoggingViewerViewModel.Dispose();
+            LoggingItemsControlViewModel.Dispose();
+            base.Dispose();
+        }
+
         private void DeleteObjectsStore_OnDeleteLog()
         {
             LoggingItemsControlViewModel.DeleteLogFile(_selectedLogFileStore.CurrentSelectedLogFile);

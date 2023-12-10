@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RevitBatchExporter.Frontend.MVVM
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -16,6 +16,9 @@ namespace RevitBatchExporter.Frontend.MVVM
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        
+        public virtual void Dispose()
+        {
+
+        }
     }
 }

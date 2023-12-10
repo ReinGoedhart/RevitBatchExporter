@@ -41,6 +41,13 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
 
         }
 
+        public override void Dispose()
+        {
+            _deleteObjectsStore.OnDeleteProject -= OnDeletedProjects;
+            _selectedProjectStore.ProjectIsEdited -= _selectedProjectStore_ProjectIsEdited;
+            base.Dispose();
+        }
+
         private void _selectedProjectStore_ProjectIsEdited(Project editedProject)
         {
             ProjectsCollectionView.Refresh();

@@ -38,6 +38,15 @@ namespace RevitBatchExporter.Frontend.ViewModels
             OnPropertyChanged(nameof(IsOpen));
         }
 
+        public override void Dispose()
+        {
+            _navigationStore.CurrentViewModelChanged -= OnCurrentViewModelChanged;
+            _modalNavigationStore.CurrentViewModelChanged -= OnCurrentModalViewModelChanged;
+
+
+            base.Dispose();
+        }
+
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));

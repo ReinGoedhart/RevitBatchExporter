@@ -7,10 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel
-            Grid.RowSpan="2"
-            Margin="0,0,0,0"
-            HorizontalAlignment="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="0,0,0,0" HorizontalAlignment="Left">
             <Border
                 Margin="15,20,15,40"
                 BorderBrush="{StaticResource SecondaryTextColorBrush}"
@@ -50,17 +51,18 @@
         </StackPanel>
 
         <Button
-            Margin="10,0,0,10"
+            Grid.Row="1"
+            Margin="10,20,0,10"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
-            Background="{StaticResource PrimaryColorBrush}"
-            Command="{Binding NavigateSettings}">
+            Background="{StaticResource SecondaryColorBrush}"
+            Command="{Binding NavigateSettings}"
+            Style="{StaticResource CircleButtonTheme}">
             <Image
                 Width="25"
                 Height="25"
                 Margin="0,0,0,0"
                 Source="../Resources/SettingsIcon.png" />
         </Button>
-
     </Grid>
 </UserControl>

@@ -2,13 +2,9 @@
 using RevitBatchExporter.Frontend.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Stores;
-using RevitBatchExporter.Frontend.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using static RevitBatchExporter.Frontend.Enums.Enums;
 
@@ -39,6 +35,13 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
 
             _createConfigurationStore.OnCreatedConfiguration += OnCreatedConfiguration;
             _deleteObjectsStore.OnDeleteConfiguration += OnDeleteConfiguration;
+        }
+
+        public override void Dispose()
+        {
+            _createConfigurationStore.OnCreatedConfiguration -= OnCreatedConfiguration;
+            _deleteObjectsStore.OnDeleteConfiguration -= OnDeleteConfiguration;
+            base.Dispose();
         }
 
         private void OnDeleteConfiguration()
@@ -74,12 +77,12 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
 
         private void SeedDataForConfigurations()
         {
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 1, ConfigurationName = "Rein", RevitVersion = Enums.Enums.RevitRelease.Revit2021 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 2, ConfigurationName = "Coen", RevitVersion = Enums.Enums.RevitRelease.Revit2022 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 3, ConfigurationName = "Jolie", RevitVersion = Enums.Enums.RevitRelease.Revit2023 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Jan", RevitVersion = Enums.Enums.RevitRelease.Revit2024 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Caroline", RevitVersion = Enums.Enums.RevitRelease.Revit2020 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Aniek", RevitVersion = Enums.Enums.RevitRelease.Revit2021 });
+            SeedDataForConfigurationsList.Add(new Configuration() { Id = 1, ConfigurationName = "Rein", RevitVersion = RevitRelease.Revit2021 });
+            SeedDataForConfigurationsList.Add(new Configuration() { Id = 2, ConfigurationName = "Coen", RevitVersion = RevitRelease.Revit2022 });
+            SeedDataForConfigurationsList.Add(new Configuration() { Id = 3, ConfigurationName = "Jolie", RevitVersion = RevitRelease.Revit2023 });
+            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Jan", RevitVersion = RevitRelease.Revit2024 });
+            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Caroline", RevitVersion = RevitRelease.Revit2020 });
+            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Aniek", RevitVersion = RevitRelease.Revit2021 });
         }
 
     }

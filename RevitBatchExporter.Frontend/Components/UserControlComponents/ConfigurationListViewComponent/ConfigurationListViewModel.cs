@@ -26,12 +26,17 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
             
             _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
         }
+        public override void Dispose()
+        {
+            _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
+            base.Dispose();
+        }
+
 
         private void OnConfigurationChanged(Configuration currentConfiguration)
         {
             CurrentConfiguration = currentConfiguration;
             OnPropertyChanged(nameof(CurrentConfiguration));
-
             //populate(currentConfiguration);
         }
 

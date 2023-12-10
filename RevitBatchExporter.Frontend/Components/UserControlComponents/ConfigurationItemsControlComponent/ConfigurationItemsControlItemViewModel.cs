@@ -14,7 +14,7 @@ using static RevitBatchExporter.Frontend.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ConfigurationItemsControlComponent
 {
-    public class ConfigurationItemsControlItemViewModel: ViewModelBase
+    public class ConfigurationItemsControlItemViewModel : ViewModelBase
     {
         public string Version { get; set; }
         public ObservableCollection<Configuration> Configurations { get; set; }
@@ -23,6 +23,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
         {
             Version = $"Revit {groupedConfigs.Key}";
             Configurations = new ObservableCollection<Configuration>(groupedConfigs);
+
         }
     }
 }

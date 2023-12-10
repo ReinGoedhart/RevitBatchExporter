@@ -33,6 +33,12 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingVi
             _selectedLogFileStore.selectedLogFileChanged += _selectedLogFileStore_selectedLogFileChanged;
         }
 
+        public override void Dispose()
+        {
+            _selectedLogFileStore.selectedLogFileChanged -= _selectedLogFileStore_selectedLogFileChanged;
+            base.Dispose();
+        }
+
         private void ExportToDeveloperCommand()
         {
             _exportToDeveloperNavigationService.Navigate();

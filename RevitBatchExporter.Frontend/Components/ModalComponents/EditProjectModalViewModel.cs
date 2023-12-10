@@ -46,5 +46,11 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
                 EditingProject = obj;
             }
         }
+
+        public override void Dispose()
+        {
+            _selectedProjectStore.selectedProjectChanged -= SelectedProjectStore_selectedProjectChanged;
+            base.Dispose();
+        }
     }
 }

@@ -37,6 +37,12 @@ namespace RevitBatchExporter.Frontend.ViewModels
             CreateConfigurationModal = new CreateConfigurationModalCommand(_errorMessagesStore, _errorModalNavigationService, _createConfigurationModalNavigationService, ProjectDataGridViewModel);
         }
 
+        public override void Dispose()
+        {
+            ProjectDataGridViewModel.Dispose();
+            base.Dispose();
+        }
+
         private string _searchString;
         public string SearchString
         {

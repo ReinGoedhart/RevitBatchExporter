@@ -74,5 +74,14 @@ namespace RevitBatchExporter.Frontend.ViewModels
         public ICommand BeginExport { get; }
         public ICommand DeleteConfiguration { get; }
 
+        public override void Dispose()
+        {
+            _selectedConfigurationStore.ConfigurationChanged -= OnConfigurationChanged;
+            _deleteObjectsStore.OnDeleteConfiguration -= _deleteObjectsStore_OnDeleteConfiguration;
+            ConfigurationListingViewModel.Dispose();
+            ConfigurationItemsControlViewModel.Dispose();
+
+            base.Dispose();
+        }
     }
 }

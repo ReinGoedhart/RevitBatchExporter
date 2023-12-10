@@ -53,7 +53,8 @@
             Margin="10,0,0,10"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
-            Background="{StaticResource PrimaryColorBrush}">
+            Background="{StaticResource PrimaryColorBrush}"
+            Command="{Binding NavigateSettings}">
             <Image
                 Width="25"
                 Height="25"

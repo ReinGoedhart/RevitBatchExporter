@@ -1,4 +1,5 @@
-﻿using RevitBatchExporter.Frontend.Models;
+﻿using RevitBatchExporter.Frontend.Commands;
+using RevitBatchExporter.Frontend.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
@@ -18,6 +19,7 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
         private SelectedProjectStore _selectedProjectStore { get; set; }
         public Project EditingProject { get; set; }
         public ICommand EditProject { get; }
+        public ICommand ChooseConfigurationJson { get; }
         public ICommand Cancel { get; }
         public EditProjectModalViewModel(INavigationService cancel, SelectedProjectStore selectedProjectStore)
         {
@@ -29,8 +31,13 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
             });
             Cancel = new RelayCommand(() => { cancel.Navigate(); });
             _selectedProjectStore.selectedProjectChanged += SelectedProjectStore_selectedProjectChanged;
+            ChooseConfigurationJson = new ChooseFolderCommand(this);
         }
 
+        public void UpdateJsonCommand()
+        {
+            OnPropertyChanged(nameof(EditingProject));
+        }
 
         private void SelectedProjectStore_selectedProjectChanged(Project obj)
         {

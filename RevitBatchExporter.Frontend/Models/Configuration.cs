@@ -7,5 +7,6 @@ namespace RevitBatchExporter.Frontend.Models
         public int Id { get; set; }
         public string ConfigurationName { get; set; }
         public RevitRelease RevitVersion { get; set; } 
+        public bool IsVisible { get; set; }
     }
 }

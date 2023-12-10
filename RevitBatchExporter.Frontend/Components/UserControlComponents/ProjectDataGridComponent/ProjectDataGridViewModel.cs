@@ -62,6 +62,8 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
             {
                 _projectDataGridItemViewModel.Remove(itemToRemove);
             }
+
+            _checkedProjects.Clear();
         }
 
         public void DuplicateProject(ProjectDataGridItemViewModel ProjectDataGridItemViewModel)

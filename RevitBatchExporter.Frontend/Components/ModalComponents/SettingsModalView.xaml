@@ -1,0 +1,129 @@
+﻿<UserControl
+    x:Class="RevitBatchExporter.Frontend.Components.ModalComponents.SettingsModalView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RevitBatchExporter.Frontend.Components.ModalComponents"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border Width="auto" Background="{StaticResource BackgroundColor}">
+        <StackPanel>
+            <Grid Margin="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="A" />
+                    <ColumnDefinition Width="auto" SharedSizeGroup="B" />
+                    <ColumnDefinition
+                        Width="*"
+                        MaxWidth="400"
+                        SharedSizeGroup="C" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" MinHeight="70" />
+                    <RowDefinition Height="auto" MinHeight="70" />
+                    <RowDefinition Height="auto" MinHeight="70" />
+                    <RowDefinition Height="auto" MinHeight="70" />
+                    <RowDefinition Height="100" />
+                </Grid.RowDefinitions>
+                <Label
+                    VerticalAlignment="Center"
+                    Content="Settings menu"
+                    FontSize="35"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <Button
+                    Grid.Column="2"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource SecondaryColorBrush}"
+                    Command="{Binding Cancel}"
+                    Content="X"
+                    DockPanel.Dock="Right"
+                    FontWeight="Bold"
+                    Style="{StaticResource CircleButtonTheme}" />
+                <Label
+                    Grid.Row="1"
+                    VerticalAlignment="Center"
+                    Content="Output directory"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="20,0,20,0"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource PrimaryColorBrush}"
+                    Command="{Binding ChooseOutputFolder}"
+                    Content="Choose"
+                    Style="{StaticResource LargeRoundedButtonTheme}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Foreground="{StaticResource SecondaryTextColorBrush}"
+                    Text="{Binding SaveDirectory}"
+                    TextWrapping="Wrap" />
+                <Label
+                    Grid.Row="2"
+                    VerticalAlignment="Center"
+                    Content="Logging directory"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <Button
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="20,0,20,0"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource PrimaryColorBrush}"
+                    Command="{Binding ChooseLoggingFolder}"
+                    Content="Choose"
+                    Style="{StaticResource LargeRoundedButtonTheme}" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Foreground="{StaticResource SecondaryTextColorBrush}"
+                    Text="{Binding LogDirectory}"
+                    TextWrapping="Wrap" />
+                <Label
+                    Grid.Row="3"
+                    Margin="0,0,30,0"
+                    VerticalAlignment="Center"
+                    Content="Create new local directory"
+                    FontSize="20"
+                    Foreground="{StaticResource PrimaryTextColorBrush}" />
+                <Button
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="20,0,20,0"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource PrimaryColorBrush}"
+                    Command="{Binding ChooseLocalFolder}"
+                    Content="Choose"
+                    Style="{StaticResource LargeRoundedButtonTheme}" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Foreground="{StaticResource SecondaryTextColorBrush}"
+                    Text="{Binding CreateNewLocalDirectory}"
+                    TextWrapping="Wrap" />
+                <Button
+                    Grid.Row="4"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="#d19f01"
+                    Command="{Binding SaveSettings}"
+                    Content="Save settings"
+                    Style="{StaticResource LargeRoundedButtonTheme}" />
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>

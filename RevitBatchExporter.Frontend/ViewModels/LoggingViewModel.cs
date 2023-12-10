@@ -1,5 +1,6 @@
 ﻿using RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingItemsControlComponent;
 using RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingViewerComponent;
+using RevitBatchExporter.Frontend.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
@@ -17,13 +18,37 @@ namespace RevitBatchExporter.Frontend.ViewModels
         public LoggingItemsControlViewModel LoggingItemsControlViewModel { get; set; }
         private SelectedLogFileStore _selectedLogFileStore;
         private INavigationService _deleteNavigationService;
+        private DeleteObjectsStore _deleteObjectsStore;
 
-        public LoggingViewModel(SelectedLogFileStore selectedLogFileStore, INavigationService deleteNavigationService)
+        public LogFile SelectedLogFile => _selectedLogFileStore?.CurrentSelectedLogFile;
+        public bool HasSelectedLogFile => SelectedLogFile != null;
+
+        public LoggingViewModel(SelectedLogFileStore selectedLogFileStore, DeleteObjectsStore deleteObjectsStore, INavigationService deleteNavigationService, INavigationService exportToDeveloperNavigationService)
         {
+            _deleteObjectsStore = deleteObjectsStore;
             _selectedLogFileStore = selectedLogFileStore;
             _deleteNavigationService = deleteNavigationService;
-            LoggingViewerViewModel = new LoggingViewerViewModel();
-            LoggingItemsControlViewModel = new LoggingItemsControlViewModel();
+            LoggingViewerViewModel = new LoggingViewerViewModel(_selectedLogFileStore, _deleteNavigationService, exportToDeveloperNavigationService);
+            LoggingItemsControlViewModel = new LoggingItemsControlViewModel(_selectedLogFileStore);
+            _deleteObjectsStore.OnDeleteLog += DeleteObjectsStore_OnDeleteLog;
+            _selectedLogFileStore.selectedLogFileChanged += _selectedLogFileStore_selectedLogFileChanged;
+        }
+
+        private void _selectedLogFileStore_selectedLogFileChanged(LogFile obj)
+        {
+            if (obj != null)
+            {
+                OnPropertyChanged(nameof(SelectedLogFile));
+                OnPropertyChanged(nameof(HasSelectedLogFile));
+            }
+        }
+
+        private void DeleteObjectsStore_OnDeleteLog()
+        {
+            LoggingItemsControlViewModel.DeleteLogFile(_selectedLogFileStore.CurrentSelectedLogFile);
+            _selectedLogFileStore.CurrentSelectedLogFile = null;
+            OnPropertyChanged(nameof(SelectedLogFile));
+            OnPropertyChanged(nameof(HasSelectedLogFile));
         }
     }
 }

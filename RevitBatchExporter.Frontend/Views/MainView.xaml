@@ -41,6 +41,12 @@
             <DataTemplate DataType="{x:Type modalcomponents:ExportModalViewModel}">
                 <modalcomponents:ExportModalView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type modalcomponents:ExportToDeveloperModalViewModel}">
+                <modalcomponents:ExportToDeveloperModalView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type modalcomponents:SettingsModalViewModel}">
+                <modalcomponents:SettingsModalView />
+            </DataTemplate>
 
             <!--  Views  -->
             <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">

@@ -5,28 +5,53 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingViewerComponent"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid Margin="10,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <Label
-            Grid.Column="0"
-            Content="{Binding ConfigurationName}"
-            FontSize="30"
-            Foreground="{StaticResource PrimaryColorBrush}" />
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="0,0,0,25"
+            Orientation="Horizontal">
+            <Button
+                Margin="10,0"
+                Background="#749A25"
+                Command="{Binding ExportLogFileToDeveloper}"
+                Content="Export to developer"
+                Style="{StaticResource LargeRoundedButtonTheme}" />
+            <Button
+                Background="{StaticResource SecondaryColorBrush}"
+                Command="{Binding DeleteLogFile}"
+                Content="Delete log file"
+                Style="{StaticResource LargeRoundedButtonTheme}" />
+        </StackPanel>
 
         <Border
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
+            Grid.Row="0"
+            Width="auto"
+            Margin="20,25,0,0"
+            BorderBrush="{StaticResource PrimaryTextColorBrush}"
+            BorderThickness="1,1,1,0"
+            CornerRadius="5 5 0 0">
+            <Label
+                Padding="20,5"
+                Content="{Binding ConfigurationName}"
+                FontSize="20" />
+        </Border>
+        <Border
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            Margin="0,00,0,0"
             BorderBrush="{StaticResource PrimaryTextColorBrush}"
             BorderThickness="1"
             CornerRadius="8">
@@ -35,14 +60,12 @@
                 Margin="15,10"
                 Background="Transparent"
                 BorderThickness="0"
-                Foreground="white"
+                Foreground="{StaticResource PrimaryTextColorBrush}"
                 ItemsSource="{Binding FormattedLogLines}">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
                         <Setter Property="Focusable" Value="False" />
                         <Setter Property="IsHitTestVisible" Value="False" />
-
-
                     </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>

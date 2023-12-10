@@ -22,6 +22,12 @@
     <Compile Update="Components\ModalComponents\ExportModalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Components\ModalComponents\ExportToDeveloperModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Components\ModalComponents\SettingsModalView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Components\UserControlComponents\ConfigurationItemsControlComponent\ConfigurationItemsControlView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -67,6 +73,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\ModalComponents\ExportModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\ModalComponents\ExportToDeveloperModalView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\ModalComponents\SettingsModalView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\UserControlComponents\ConfigurationItemsControlComponent\ConfigurationItemsControlView.xaml">

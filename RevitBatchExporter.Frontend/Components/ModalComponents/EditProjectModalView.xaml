@@ -22,7 +22,7 @@
                     <RowDefinition Height="60" />
                     <RowDefinition Height="60" />
                     <RowDefinition Height="60" />
-                    <RowDefinition Height="60" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
 
@@ -111,18 +111,20 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="{StaticResource PrimaryColorBrush}"
-                    Command="{Binding SelectJson}"
+                    Command="{Binding ChooseConfigurationJson}"
                     Content="Choose"
                     Style="{StaticResource LargeRoundedButtonTheme}" />
-                <Label
+                <TextBlock
                     Grid.Row="5"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    Height="40"
+                    MinHeight="40"
+                    Margin="5,0,0,15"
                     VerticalAlignment="Center"
-                    Content="{Binding EditingProject.ConfigurationPath}"
                     FontSize="20"
-                    Foreground="{StaticResource SecondaryTextColorBrush}" />
+                    Foreground="{StaticResource SecondaryTextColorBrush}"
+                    Text="{Binding EditingProject.ConfigurationPath}"
+                    TextWrapping="Wrap" />
 
 
 

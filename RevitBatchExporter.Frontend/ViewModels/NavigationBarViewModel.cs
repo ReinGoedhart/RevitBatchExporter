@@ -6,23 +6,26 @@ using System.Windows.Input;
 
 namespace RevitBatchExporter.Frontend.ViewModels
 {
-   
+
     public class NavigationBarViewModel : ViewModelBase
     {
         public ICommand NavigateLogging { get; }
         public ICommand NavigateConfiguration { get; }
         public ICommand NavigateProjects { get; }
         public ICommand NavigateHome { get; }
+        public ICommand NavigateSettings { get; }
 
         public NavigationBarViewModel(INavigationService homeNavigationService,
             INavigationService projectNavigationService,
             INavigationService configurationNavigationService,
-            INavigationService loggingNavigationService)
+            INavigationService loggingNavigationService,
+            INavigationService settingsNavigationService)
         {
             NavigateHome = new NavigateCommand(homeNavigationService);
             NavigateProjects = new NavigateCommand(projectNavigationService);
             NavigateConfiguration = new NavigateCommand(configurationNavigationService);
             NavigateLogging = new NavigateCommand(loggingNavigationService);
+            NavigateSettings = new NavigateCommand(settingsNavigationService);
         }
     }
 }

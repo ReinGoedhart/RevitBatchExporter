@@ -9,11 +9,6 @@
     d:DesignWidth="800"
     Foreground="{StaticResource PrimaryTextColorBrush}"
     mc:Ignorable="d">
-
-
-
-
-
     <Grid Margin="20,10,30,20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />

@@ -9,10 +9,11 @@ namespace RevitBatchExporter.Frontend.Stores
 {
     public class SelectedLogFileStore
     {
-        public LogFile CurrentSelectedLogFile { get; set; }
+        public LogFile? CurrentSelectedLogFile { get; set; }
         public event Action<LogFile> selectedLogFileChanged;
-        public void CurrentLogFile(LogFile selectedLogFile)
+        public void CurrentLogFileChanged(LogFile selectedLogFile)
         {
+            CurrentSelectedLogFile=  selectedLogFile;
             selectedLogFileChanged?.Invoke(selectedLogFile);
         }
     }

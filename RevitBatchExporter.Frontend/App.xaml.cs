@@ -55,7 +55,7 @@ namespace RevitBatchExporter.Frontend
                     CreateHomeViewModel(),
                     CreateProjectViewModel(),
                     CreateConfigurationViewModel(),
-                    CreateLoggingViewModel()))
+                    CreateLoggingViewModel(), CreateSettingsModalViewModel()))
             };
             mainWindow.Show();
 
@@ -78,9 +78,21 @@ namespace RevitBatchExporter.Frontend
         }
         private INavigationService CreateLoggingViewModel()
         {
-            return new NavigationService<LoggingViewModel>(_navigationStore, () => new LoggingViewModel(_selectedLogFileStore, CreateDeleteLoggingModalViewModel("Delete log file")));
+            return new NavigationService<LoggingViewModel>(_navigationStore, () => new LoggingViewModel(_selectedLogFileStore, _deleteObjectsStore, CreateDeleteLoggingModalViewModel("Delete log file"), CreateExportToDeveloperModalViewModel()));
         }
         // Modals
+
+
+
+        private INavigationService CreateExportToDeveloperModalViewModel()
+        {
+            return new ModalNavigationService<ExportToDeveloperModalViewModel>(_modalNavigationStore, () => new ExportToDeveloperModalViewModel(CreateCancelCompositeNavigationService(), _selectedLogFileStore));
+        }  
+        private INavigationService CreateSettingsModalViewModel()
+        {
+            return new ModalNavigationService<SettingsModalViewModel>(_modalNavigationStore, () => new SettingsModalViewModel(CreateCancelCompositeNavigationService()));
+        }
+        // Delete Modals
         private INavigationService CreateDeleteConfigurationModalViewModel(string deleteTitle)
         {
             return new ModalNavigationService<DeleteModalViewModel>(_modalNavigationStore, () => new DeleteModalViewModel(_deleteObjectsStore, CreateCancelCompositeNavigationService(), deleteTitle, Classes.Configuration));

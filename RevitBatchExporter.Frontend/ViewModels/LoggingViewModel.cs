@@ -1,6 +1,6 @@
 ﻿using RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingItemsControlComponent;
 using RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingViewerComponent;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;

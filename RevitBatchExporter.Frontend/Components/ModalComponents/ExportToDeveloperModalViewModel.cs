@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 using System.Windows.Input;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.Commands;
 
 namespace RevitBatchExporter.Frontend.Components.ModalComponents

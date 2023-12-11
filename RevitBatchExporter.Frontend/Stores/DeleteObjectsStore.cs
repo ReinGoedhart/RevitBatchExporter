@@ -1,7 +1,7 @@
-﻿using RevitBatchExporter.Frontend.Models;
+﻿using RevitBatchExporter.Domain.Models;
 using System;
 using System.Collections.Generic;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Stores
 {

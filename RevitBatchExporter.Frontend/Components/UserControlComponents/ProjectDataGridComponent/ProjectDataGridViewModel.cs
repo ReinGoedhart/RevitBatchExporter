@@ -1,4 +1,4 @@
-﻿using RevitBatchExporter.Frontend.Models;
+﻿using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.ViewModels;
 using System;
@@ -12,7 +12,7 @@ using System.Windows.Data;
 using System.Windows;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.Services;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent
 {
@@ -133,10 +133,10 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
                 Id = 1,
                 IsVisible = true,
                 OutputName = "hello!",
-                RevitExportType = Enums.Enums.RevitExportType.IFC,
-                RevitVersion = Enums.Enums.RevitRelease.Revit2022,
+                RevitExportType = RevitExportType.IFC,
+                RevitVersion = RevitRelease.Revit2022,
                 ViewName = "BIM360",
-                Region = Enums.Enums.Region.EMEA,
+                Region = Region.EMEA,
                 ProjectName = "Schiphol"
             };
             var project2 = new Project()
@@ -146,10 +146,10 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
                 Id = 1,
                 IsVisible = true,
                 OutputName = "asdasdsa!",
-                RevitExportType = Enums.Enums.RevitExportType.IFC,
-                RevitVersion = Enums.Enums.RevitRelease.Revit2022,
+                RevitExportType = RevitExportType.IFC,
+                RevitVersion = RevitRelease.Revit2022,
                 ViewName = "BIM360",
-                Region = Enums.Enums.Region.EMEA,
+                Region = Region.EMEA,
                 ProjectName = "Schiphol"
             };
             var dataGridItem = new ProjectDataGridItemViewModel(project, _selectedProjectStore, _createEditProjectModalNavigationService);

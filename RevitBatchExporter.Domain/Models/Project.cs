@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 
-namespace RevitBatchExporter.Frontend.Models
+namespace RevitBatchExporter.Domain.Models
 {
     public class Project 
     {
@@ -22,5 +22,6 @@ namespace RevitBatchExporter.Frontend.Models
         public RevitRelease RevitVersion { get; set; }
         public RevitExportType RevitExportType { get; set; }
         public Region Region { get; set; }
+        public List<Configuration> Configurations { get; set; } 
     }
 }

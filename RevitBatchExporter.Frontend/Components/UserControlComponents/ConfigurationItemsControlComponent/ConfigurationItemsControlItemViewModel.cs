@@ -1,5 +1,5 @@
 ﻿using RevitBatchExporter.Frontend.Commands.ConfigurationCommand;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.ViewModels;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ConfigurationItemsControlComponent
 {

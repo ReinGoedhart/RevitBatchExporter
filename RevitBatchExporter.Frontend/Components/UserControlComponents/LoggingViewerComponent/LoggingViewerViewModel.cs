@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using RevitBatchExporter.Frontend.Commands;
 using RevitBatchExporter.Frontend.Commands.LogCommands;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;

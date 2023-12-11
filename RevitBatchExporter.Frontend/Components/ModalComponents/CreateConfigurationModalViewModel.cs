@@ -1,5 +1,5 @@
 ﻿using RevitBatchExporter.Frontend.Commands.ProjectCommands;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Components.ModalComponents
 {

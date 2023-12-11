@@ -1,5 +1,5 @@
 ﻿using RevitBatchExporter.Frontend.Commands.LogCommands;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.ViewModels;

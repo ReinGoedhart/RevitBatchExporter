@@ -1,5 +1,5 @@
 ﻿using RevitBatchExporter.Frontend.Components.UserControlComponents.ConfigurationItemsControlComponent;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Stores;
 

@@ -1,12 +1,12 @@
 ﻿using RevitBatchExporter.Frontend.Commands.ConfigurationCommand;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.Stores;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ConfigurationItemsControlComponent
 {

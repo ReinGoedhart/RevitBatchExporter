@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 
 namespace RevitBatchExporter.Frontend.Stores
 {

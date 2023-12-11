@@ -1,5 +1,5 @@
-﻿using RevitBatchExporter.Frontend.Enums;
-using RevitBatchExporter.Frontend.Models;
+﻿using RevitBatchExporter.Domain.Enums;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using RevitBatchExporter.Frontend.ViewModels;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 using System.Windows.Input;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.Services;

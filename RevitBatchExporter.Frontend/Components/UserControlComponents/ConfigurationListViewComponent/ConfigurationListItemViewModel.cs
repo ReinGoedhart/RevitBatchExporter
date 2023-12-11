@@ -1,4 +1,4 @@
-﻿using RevitBatchExporter.Frontend.Models;
+﻿using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.MVVM;
 using System;
 using System.Collections.Generic;

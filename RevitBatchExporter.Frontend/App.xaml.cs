@@ -1,6 +1,6 @@
 ﻿using RevitBatchExporter.Frontend.Components.ModalComponents;
 using RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent;
-using RevitBatchExporter.Frontend.Models;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.ViewModels;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
-using static RevitBatchExporter.Frontend.Enums.Enums;
+using static RevitBatchExporter.Domain.Enums.Enums;
 
 namespace RevitBatchExporter.Frontend
 {

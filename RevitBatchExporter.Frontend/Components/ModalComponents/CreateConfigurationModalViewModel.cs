@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static RevitBatchExporter.Domain.Enums.Enums;
+using RevitBatchExporter.Frontend.Commands;
 
 namespace RevitBatchExporter.Frontend.Components.ModalComponents
 {
@@ -17,8 +18,8 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
     {
         public ICommand CreateAndNavigate { get; set; }
         public ICommand Cancel { get; }
-        INavigationService _createConfigurationAndNavigate;
-        CreateConfigurationStore _createConfigurationStore;
+        private readonly INavigationService _createConfigurationAndNavigate;
+        private readonly ConfigurationsStore _configurationsStore;
 
         private string _configurationNameText;
         public string ConfigurationNameText
@@ -34,24 +35,14 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
             }
         }
 
-        public CreateConfigurationModalViewModel(CompositeNavigationService createConfigurationAndNavigate, CompositeNavigationService cancel, CreateConfigurationStore createConfigurationStore)
+        public CreateConfigurationModalViewModel(CompositeNavigationService configurationAndNavigate, 
+            CompositeNavigationService cancel, 
+            ConfigurationsStore configurationsStore)
         {
-            _createConfigurationStore = createConfigurationStore;
-            _createConfigurationAndNavigate = createConfigurationAndNavigate;
-            CreateAndNavigate = new RelayCommand(CreateConfiguration);
-            Cancel = new RelayCommand(() => { cancel.Navigate();});
-        }
-
-        private void CreateConfiguration()
-        {
-            Configuration configuration = new Configuration()
-            {
-                ConfigurationName = ConfigurationNameText,
-                Id = 3,
-                RevitVersion = RevitRelease.Revit2021
-            };
-            _createConfigurationAndNavigate.Navigate();
-            _createConfigurationStore.CreateConfiguration(configuration);
+            _configurationsStore = configurationsStore;
+            _createConfigurationAndNavigate = configurationAndNavigate;
+            CreateAndNavigate = new CreateConfigurationCommand(_createConfigurationAndNavigate, _configurationsStore, ConfigurationNameText);
+            Cancel = new RelayCommand(() => { cancel.Navigate(); });
         }
     }
 }

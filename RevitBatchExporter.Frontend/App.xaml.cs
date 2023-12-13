@@ -5,15 +5,13 @@ using RevitBatchExporter.Frontend.Services;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.ViewModels;
 using RevitBatchExporter.Frontend.Views;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Navigation;
 using static RevitBatchExporter.Domain.Enums.Enums;
+using RevitBatchExporter.Domain.Commands;
+using RevitBatchExporter.Domain.Queries;
+using RevitBatchExporter.EntityFramework;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace RevitBatchExporter.Frontend
 {
@@ -22,29 +20,75 @@ namespace RevitBatchExporter.Frontend
     /// </summary>
     public partial class App : Application
     {
+        private readonly RevitBatchExporterDbContextFactory _dbContextFactory;
+        private readonly IGetAllProjectsQuery _getAllProjectsQuery;
+        private readonly ICreateProjectCommand _createProjectCommand;
+        private readonly IDeleteProjectCommand _deleteProjectCommand;
+        private readonly IUpdateProjectCommand _updateProjectCommand;
+
+        
+
+        private readonly IGetAllLogFilesQuery _getAllLogFilesQuery;
+        private readonly IUpdateLogFileCommand _updateLogFileCommand;
+        private readonly ICreateLogFileCommand _createLogFileCommand;
+        private readonly IDeleteLogFileCommand _deleteLogFileCommand;
+
+        private readonly IGetAllConfigurationsQuery _getAllConfigurationsQuery;
+        private readonly ICreateConfigurationCommand _createConfigurationCommand;
+        private readonly IDeleteConfigurationCommand _deleteConfigurationCommand;
+        private readonly IUpdateConfigurationCommand _updateConfigurationCommand;
+
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly SelectedProjectStore _selectedProjectStore;
         private readonly SelectedConfigurationStore _selectedConfigurationStore;
         private readonly ErrorMessagesStore _errorMessagesStore;
-        private readonly CreateConfigurationStore _createConfigurationStore;
         private readonly DeleteObjectsStore _deleteObjectsStore;
         private readonly SelectedLogFileStore _selectedLogFileStore;
-
+        private readonly ConfigurationsStore _configurationsStore;
+        private readonly ProjectsStore _projectsStore;
+        private readonly LogFilesStore _logFilesStore;
 
         public App()
         {
+            string connectionString = "Data Source=RevitBatchExporter.db";
+            _dbContextFactory = new RevitBatchExporterDbContextFactory(new DbContextOptionsBuilder().UseSqlite(connectionString).Options);
+
+            _getAllProjectsQuery = new GetAllProjectsQuery(_dbContextFactory);
+            _createProjectCommand = new CreateProjectCommand(_dbContextFactory);
+            _deleteProjectCommand = new DeleteProjectCommand(_dbContextFactory);
+            _updateProjectCommand = new UpdateProjectCommand(_dbContextFactory);
+
+            _getAllConfigurationsQuery = new GetAllConfigurationsQuery(_dbContextFactory);
+            _createConfigurationCommand = new CreateConfigurationCommand(_dbContextFactory);
+            _deleteConfigurationCommand = new DeleteConfigurationCommand(_dbContextFactory);
+            _updateConfigurationCommand = new UpdateConfigurationCommand(_dbContextFactory);
+
+            _getAllLogFilesQuery = new GetAllLogFilesQuery(_dbContextFactory);
+            _createLogFileCommand = new CreateLogFileCommand(_dbContextFactory);
+            _deleteLogFileCommand = new DeleteLogFileCommand(_dbContextFactory);
+            _updateLogFileCommand = new UpdateLogFileCommand(_dbContextFactory);
+
+            _configurationsStore = new ConfigurationsStore( _getAllConfigurationsQuery, _createConfigurationCommand, _deleteConfigurationCommand, _updateConfigurationCommand);
+            _projectsStore = new ProjectsStore( _getAllProjectsQuery, _createProjectCommand, _deleteProjectCommand, _updateProjectCommand);
+            _logFilesStore = new LogFilesStore( _getAllLogFilesQuery, _createLogFileCommand, _deleteLogFileCommand, _updateLogFileCommand);
+
+
             _navigationStore = new NavigationStore();
             _modalNavigationStore = new ModalNavigationStore();
             _selectedProjectStore = new SelectedProjectStore();
             _errorMessagesStore = new ErrorMessagesStore();
             _selectedConfigurationStore = new SelectedConfigurationStore();
-            _createConfigurationStore = new CreateConfigurationStore();
             _deleteObjectsStore = new DeleteObjectsStore();
             _selectedLogFileStore = new SelectedLogFileStore();
         }
         protected override void OnStartup(StartupEventArgs e)
         {
+            using(RevitBatchExporterDbContext context = _dbContextFactory.Create())
+            {
+                context.Database.Migrate();
+            }
+
             INavigationService homeNaviationService = CreateHomeViewModel();
             homeNaviationService.Navigate();
 
@@ -65,12 +109,12 @@ namespace RevitBatchExporter.Frontend
         // Views
         private INavigationService CreateProjectViewModel()
         {
-            return new NavigationService<ProjectViewModel>(_navigationStore, () => new ProjectViewModel(_selectedProjectStore,_errorMessagesStore, _deleteObjectsStore, CreateDeleteProjectsModalViewModel("Delete project"), CreateConfigurationModalViewModel(), CreateEditProjectModalViewModel(), CreateErrorModalViewModel()));
+            return new NavigationService<ProjectViewModel>(_navigationStore, () => new ProjectViewModel(_selectedProjectStore, _errorMessagesStore, _deleteObjectsStore, _projectsStore, CreateDeleteProjectsModalViewModel("Delete project"), CreateConfigurationModalViewModel(), CreateEditProjectModalViewModel(), CreateErrorModalViewModel()));
         }
         private INavigationService CreateConfigurationViewModel()
         {
-            return new NavigationService<ConfigurationViewModel>(_navigationStore, () => 
-            new ConfigurationViewModel(_selectedConfigurationStore, _errorMessagesStore, _createConfigurationStore, _deleteObjectsStore, CreateDeleteConfigurationModalViewModel("Delete configuration"), CreateErrorModalViewModel(), ExportModalViewModel())); ;
+            return new NavigationService<ConfigurationViewModel>(_navigationStore, () =>
+            new ConfigurationViewModel(_selectedConfigurationStore, _errorMessagesStore, _configurationsStore, _deleteObjectsStore, CreateDeleteConfigurationModalViewModel("Delete configuration"), CreateErrorModalViewModel(), ExportModalViewModel())); ;
         }
         private INavigationService CreateHomeViewModel()
         {
@@ -87,7 +131,7 @@ namespace RevitBatchExporter.Frontend
         private INavigationService CreateExportToDeveloperModalViewModel()
         {
             return new ModalNavigationService<ExportToDeveloperModalViewModel>(_modalNavigationStore, () => new ExportToDeveloperModalViewModel(CreateCancelCompositeNavigationService(), _selectedLogFileStore));
-        }  
+        }
         private INavigationService CreateSettingsModalViewModel()
         {
             return new ModalNavigationService<SettingsModalViewModel>(_modalNavigationStore, () => new SettingsModalViewModel(CreateCancelCompositeNavigationService()));
@@ -108,7 +152,7 @@ namespace RevitBatchExporter.Frontend
         private INavigationService CreateConfigurationModalViewModel()
         {
             CompositeNavigationService CreateConfigurationAndNavigate = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore), CreateConfigurationViewModel());
-            return new ModalNavigationService<CreateConfigurationModalViewModel>(_modalNavigationStore, () => new CreateConfigurationModalViewModel(CreateConfigurationAndNavigate, CreateCancelCompositeNavigationService(), _createConfigurationStore));
+            return new ModalNavigationService<CreateConfigurationModalViewModel>(_modalNavigationStore, () => new CreateConfigurationModalViewModel(CreateConfigurationAndNavigate, CreateCancelCompositeNavigationService(), _configurationsStore));
         }
         private INavigationService CreateEditProjectModalViewModel()
         {
@@ -117,7 +161,7 @@ namespace RevitBatchExporter.Frontend
         private INavigationService CreateErrorModalViewModel()
         {
             return new ModalNavigationService<ErrorModalViewModel>(_modalNavigationStore, () => new ErrorModalViewModel(CreateCancelCompositeNavigationService(), _errorMessagesStore));
-        } 
+        }
         private INavigationService ExportModalViewModel()
         {
             return new ModalNavigationService<ExportModalViewModel>(_modalNavigationStore, () => new ExportModalViewModel(CreateCancelCompositeNavigationService()));

@@ -15,14 +15,14 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
         private readonly ObservableCollection<ConfigurationItemsControlItemViewModel> _configurationItemsControlItemViewModel;
         public IEnumerable<ConfigurationItemsControlItemViewModel> ConfigurationItemsControlItemViewModel => _configurationItemsControlItemViewModel;
         private SelectedConfigurationStore _selectedConfigurationStore;
-        private CreateConfigurationStore _createConfigurationStore;
+        private ConfigurationsStore _configurationsStore;
         private DeleteObjectsStore _deleteObjectsStore;
 
         List<Configuration> SeedDataForConfigurationsList { get; set; }
 
-        public ConfigurationItemsControlViewModel(SelectedConfigurationStore selectedConfigurationStore, CreateConfigurationStore createConfigurationStore, DeleteObjectsStore deleteObjectsStore)
+        public ConfigurationItemsControlViewModel(SelectedConfigurationStore selectedConfigurationStore, ConfigurationsStore configurationsStore, DeleteObjectsStore deleteObjectsStore)
         {
-            _createConfigurationStore = createConfigurationStore;
+            _configurationsStore = configurationsStore;
             _selectedConfigurationStore = selectedConfigurationStore;
             _deleteObjectsStore = deleteObjectsStore;
             _configurationItemsControlItemViewModel = new ObservableCollection<ConfigurationItemsControlItemViewModel>();
@@ -33,13 +33,13 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
 
             PopulateAndCategoriseConfigurations();
 
-            _createConfigurationStore.OnCreatedConfiguration += OnCreatedConfiguration;
+            _configurationsStore.ConfigurationCreated += OnCreatedConfiguration;
             _deleteObjectsStore.OnDeleteConfiguration += OnDeleteConfiguration;
         }
 
         public override void Dispose()
         {
-            _createConfigurationStore.OnCreatedConfiguration -= OnCreatedConfiguration;
+            _configurationsStore.ConfigurationCreated -= OnCreatedConfiguration;
             _deleteObjectsStore.OnDeleteConfiguration -= OnDeleteConfiguration;
             base.Dispose();
         }

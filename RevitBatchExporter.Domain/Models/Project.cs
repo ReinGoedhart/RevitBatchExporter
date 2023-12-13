@@ -12,8 +12,8 @@ namespace RevitBatchExporter.Domain.Models
         public int Id { get; set; }
         public bool IsVisible { get; set; }
         public string ProjectName { get; set; }
-        public Guid ModelGuid { get; set; }
-        public Guid ProjectGuid { get; set; }
+        public Guid? ModelGuid { get; set; }
+        public Guid? ProjectGuid { get; set; }
         public string LocalModelPath { get; set; }
         public string OutputName { get; set; }
         public bool SaveAfterExport { get; set; }

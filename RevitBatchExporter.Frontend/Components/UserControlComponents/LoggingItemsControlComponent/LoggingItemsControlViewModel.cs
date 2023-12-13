@@ -31,12 +31,12 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingIt
         public void DeleteLogFile(LogFile logFile)
         {
             var deletedLogFile = _loggingItemsControlItemViewModel.FirstOrDefault(x => x.LogFile == logFile);
-            if(deletedLogFile != null)
+            if (deletedLogFile != null)
             {
                 _loggingItemsControlItemViewModel.Remove(deletedLogFile);
             }
         }
-        
+
 
         //public void PopulateLogFiles()
         //{
@@ -54,7 +54,6 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingIt
                 {
                     Configuration = new Configuration() { ConfigurationName = "config" + i.ToString() },
                     ErrorsOccured = 3,
-                    Id = 1,
                     LogFilePath = "C://asdasdasd"
                 };
                 _loggingItemsControlItemViewModel.Add(new LoggingItemsControlItemViewModel(file1, _selectedLogFileStore));

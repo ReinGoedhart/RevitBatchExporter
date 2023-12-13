@@ -24,13 +24,13 @@ namespace RevitBatchExporter.Frontend.ViewModels
         public INavigationService _errorModalNavigationService;
         private ErrorMessagesStore _errorMessagesStore;
 
-        public ProjectViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, INavigationService deleteModalNavigationService, INavigationService createConfigurationModalNavigationService, INavigationService editProjectModalNavigationService, INavigationService errorModalNavigationService)
+        public ProjectViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, ProjectsStore projectStore, INavigationService deleteModalNavigationService, INavigationService createConfigurationModalNavigationService, INavigationService editProjectModalNavigationService, INavigationService errorModalNavigationService)
         {
             _errorMessagesStore = errorMessagesStore;
             _createConfigurationModalNavigationService = createConfigurationModalNavigationService;
             _errorModalNavigationService = errorModalNavigationService;
 
-            ProjectDataGridViewModel = new ProjectDataGridViewModel(selectedProjectStore, errorMessagesStore, deleteObjectsStore, editProjectModalNavigationService);
+            ProjectDataGridViewModel = ProjectDataGridViewModel.LoadViewModel(selectedProjectStore, errorMessagesStore, deleteObjectsStore, projectStore, editProjectModalNavigationService);
 
             DuplicateProject = new DuplicateProjectCommand(this);
             DeleteModal = new NavigateCommand(deleteModalNavigationService);

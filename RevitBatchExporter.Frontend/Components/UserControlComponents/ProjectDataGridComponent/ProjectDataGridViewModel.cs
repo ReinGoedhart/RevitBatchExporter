@@ -13,6 +13,8 @@ using System.Windows;
 using RevitBatchExporter.Frontend.Stores;
 using RevitBatchExporter.Frontend.Services;
 using static RevitBatchExporter.Domain.Enums.Enums;
+using System.Windows.Input;
+using RevitBatchExporter.Frontend.Commands.ProjectCommands;
 
 namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent
 {
@@ -22,24 +24,47 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
         private SelectedProjectStore _selectedProjectStore;
         private ErrorMessagesStore _errorMessagesStore;
         private DeleteObjectsStore _deleteObjectsStore;
-        public ProjectDataGridViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, INavigationService createEditProjectModalNavigationService)
+        private ProjectsStore _projectStore;
+        public ProjectDataGridViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, ProjectsStore projectStore, INavigationService createEditProjectModalNavigationService)
         {
             _deleteObjectsStore = deleteObjectsStore;
             _createEditProjectModalNavigationService = createEditProjectModalNavigationService;
             _selectedProjectStore = selectedProjectStore;
             _errorMessagesStore = errorMessagesStore;
+            _projectStore = projectStore;
 
             _projectDataGridItemViewModel = new ObservableCollection<ProjectDataGridItemViewModel>();
             _checkedProjects = new List<ProjectDataGridItemViewModel>();
             ProjectsCollectionView = CollectionViewSource.GetDefaultView(_projectDataGridItemViewModel);
             ProjectsCollectionView.Filter = FilterProjects;
 
-            GetProjects();
+
+            LoadProjectsCommand = new LoadProjectsCommand(projectStore);
 
             _deleteObjectsStore.OnDeleteProject += OnDeletedProjects;
             _selectedProjectStore.ProjectIsEdited += _selectedProjectStore_ProjectIsEdited;
-
+            _projectStore.ProjectsLoaded += ProjectStore_ProjectsLoaded;
         }
+
+        private void ProjectStore_ProjectsLoaded()
+        {
+            _projectDataGridItemViewModel.Clear();
+
+            foreach (var project in _projectStore.projects)
+            {
+                var dataGridItem = new ProjectDataGridItemViewModel(project, _selectedProjectStore, _createEditProjectModalNavigationService);
+                _projectDataGridItemViewModel.Add(dataGridItem);
+            }
+        }
+
+        public static ProjectDataGridViewModel LoadViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, ProjectsStore projectStore, INavigationService createEditProjectModalNavigationService)
+        {
+            ProjectDataGridViewModel viewModel = new ProjectDataGridViewModel(selectedProjectStore, errorMessagesStore, deleteObjectsStore, projectStore, createEditProjectModalNavigationService);
+            viewModel.LoadProjectsCommand.Execute(null);
+            return viewModel;
+        }
+
+        public ICommand LoadProjectsCommand { get; }
 
         public override void Dispose()
         {
@@ -111,54 +136,8 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
             }
         }
         // Basic CRUD opererations
-        private readonly ObservableCollection<ProjectDataGridItemViewModel> _projectDataGridItemViewModel;
-        
-        public void GetProjects()
-        {
-            if (_projectDataGridItemViewModel.Count > 0)
-            {
-                _projectDataGridItemViewModel.Clear();
-                _checkedProjects.Clear();
-            }
-            //foreach (Project project in _vm.GetProjectService().GetAllVisible())
-            //{
-            //    var dataGridItem = new ProjectDataGridItemViewModel(project, _vm);
-            //    dataGridItem.OnIsCheckedChanged += GridItem_OnIsCheckedChanged;
-            //    _projectDataGridItemViewModel.Add(dataGridItem);
-            //}
-            var project = new Project()
-            {
-                SaveAfterExport = true,
-                ConfigurationPath = @"C://asdasdasd/asdasdsadasd/asdasdasd",
-                Id = 1,
-                IsVisible = true,
-                OutputName = "hello!",
-                RevitExportType = RevitExportType.IFC,
-                RevitVersion = RevitRelease.Revit2022,
-                ViewName = "BIM360",
-                Region = Region.EMEA,
-                ProjectName = "Schiphol"
-            };
-            var project2 = new Project()
-            {
-                SaveAfterExport = true,
-                ConfigurationPath = @"C://asdasdasd/asdasdsadasd/asdasdasd",
-                Id = 1,
-                IsVisible = true,
-                OutputName = "asdasdsa!",
-                RevitExportType = RevitExportType.IFC,
-                RevitVersion = RevitRelease.Revit2022,
-                ViewName = "BIM360",
-                Region = Region.EMEA,
-                ProjectName = "Schiphol"
-            };
-            var dataGridItem = new ProjectDataGridItemViewModel(project, _selectedProjectStore, _createEditProjectModalNavigationService);
-            var dataGridItem2 = new ProjectDataGridItemViewModel(project2, _selectedProjectStore, _createEditProjectModalNavigationService);
-            dataGridItem.OnIsCheckedChanged += GridItem_OnIsCheckedChanged;
-            dataGridItem2.OnIsCheckedChanged += GridItem_OnIsCheckedChanged;
-            _projectDataGridItemViewModel.Add(dataGridItem);
-            _projectDataGridItemViewModel.Add(dataGridItem2);
-        }
+        private ObservableCollection<ProjectDataGridItemViewModel> _projectDataGridItemViewModel;
+
         // Checkbox changes
         public List<ProjectDataGridItemViewModel> _checkedProjects { get; set; }
         private void GridItem_OnIsCheckedChanged(object sender, EventArgs e)

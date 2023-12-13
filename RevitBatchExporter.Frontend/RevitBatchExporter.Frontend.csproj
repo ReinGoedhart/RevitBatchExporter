@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RevitBatchExporter.Domain\RevitBatchExporter.Domain.csproj" />
+    <ProjectReference Include="..\RevitBatchExporter.EntityFramework\RevitBatchExporter.EntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>

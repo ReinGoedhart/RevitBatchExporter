@@ -33,7 +33,7 @@ namespace RevitBatchExporter.Frontend.ViewModels
         public ConfigurationViewModel(
             SelectedConfigurationStore selectedConfigurationStore,
             ErrorMessagesStore errorMessagesStore,
-            CreateConfigurationStore createConfigurationStore,
+            ConfigurationsStore configurationsStore,
             DeleteObjectsStore deleteObjectsStore,
             INavigationService deleteModalNavigationService,
             INavigationService errorModalNavigationService,
@@ -48,7 +48,7 @@ namespace RevitBatchExporter.Frontend.ViewModels
             _errorMessagesStore = errorMessagesStore;
 
             ConfigurationListingViewModel = new ConfigurationListViewModel(_selectedConfigurationStore);
-            ConfigurationItemsControlViewModel = new ConfigurationItemsControlViewModel(_selectedConfigurationStore, createConfigurationStore, _deleteObjectsStore);
+            ConfigurationItemsControlViewModel = new ConfigurationItemsControlViewModel(_selectedConfigurationStore, configurationsStore, _deleteObjectsStore);
 
             DeleteConfiguration = new DeleteConfigurationCommand(this, _deleteModalNavigationService);
             BeginExport = new BeginExportCommand(this, _errorMessagesStore, _exportModalNavigationService, _errorModalNavigationService);

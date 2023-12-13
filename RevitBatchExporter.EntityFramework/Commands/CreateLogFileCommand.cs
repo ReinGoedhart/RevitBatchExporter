@@ -29,6 +29,9 @@ namespace RevitBatchExporter.Domain.Commands
                     ErrorsOccured = logFile.ErrorsOccured,
                     Projects = logFile.Projects,                    
                 };
+
+                context.LogFiles.Add(logFileDto);
+                await context.SaveChangesAsync();
             }
         }
     }

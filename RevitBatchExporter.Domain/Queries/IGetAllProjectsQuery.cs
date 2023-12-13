@@ -8,6 +8,6 @@ namespace RevitBatchExporter.Domain.Queries
 {
     public interface IGetAllProjectsQuery
     {
-        public Task<IEnumerable<Project>> Execute();
+        Task<IEnumerable<Project>> Execute();
     }
 }

@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitBatchExporter.Domain.Commands
+namespace RevitBatchExporter.Domain.Queries
 {
-    public interface IDeleteProjectCommand
+    public interface IGetProjectQuery
     {
-        Task Execute(Project projectId);
+        Task<Project> Execute(int id);
     }
 }
-

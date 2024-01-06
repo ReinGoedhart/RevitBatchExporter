@@ -20,6 +20,7 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
         public ICommand Cancel { get; }
         private readonly INavigationService _createConfigurationAndNavigate;
         private readonly ConfigurationsStore _configurationsStore;
+        private readonly SelectedProjectStore _selectedProjectStore;
 
         private string _configurationNameText;
         public string ConfigurationNameText
@@ -36,12 +37,12 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
         }
 
         public CreateConfigurationModalViewModel(CompositeNavigationService configurationAndNavigate, 
-            CompositeNavigationService cancel, 
-            ConfigurationsStore configurationsStore)
+            CompositeNavigationService cancel, ConfigurationsStore configurationsStore, SelectedProjectStore selectedProjectStore)
         {
+            _selectedProjectStore = selectedProjectStore;
             _configurationsStore = configurationsStore;
             _createConfigurationAndNavigate = configurationAndNavigate;
-            CreateAndNavigate = new CreateConfigurationCommand(_createConfigurationAndNavigate, _configurationsStore, ConfigurationNameText);
+            CreateAndNavigate = new CreateConfigurationCommand(_createConfigurationAndNavigate, _configurationsStore, _selectedProjectStore, this);
             Cancel = new RelayCommand(() => { cancel.Navigate(); });
         }
     }

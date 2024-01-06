@@ -131,7 +131,7 @@ namespace RevitBatchExporter.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("configurations");
+                    b.ToTable("Configurations");
                 });
 
             modelBuilder.Entity("RevitBatchExporter.EntityFramework.Dtos.LogFileDto", b =>
@@ -140,7 +140,7 @@ namespace RevitBatchExporter.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ConfigurationId")
+                    b.Property<int>("ConfigurationsId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ErrorsOccured")
@@ -151,7 +151,7 @@ namespace RevitBatchExporter.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConfigurationId");
+                    b.HasIndex("ConfigurationsId");
 
                     b.ToTable("LogFiles");
                 });
@@ -239,13 +239,13 @@ namespace RevitBatchExporter.EntityFramework.Migrations
 
             modelBuilder.Entity("RevitBatchExporter.EntityFramework.Dtos.LogFileDto", b =>
                 {
-                    b.HasOne("RevitBatchExporter.Domain.Models.Configuration", "Configuration")
+                    b.HasOne("RevitBatchExporter.Domain.Models.Configuration", "Configurations")
                         .WithMany()
-                        .HasForeignKey("ConfigurationId")
+                        .HasForeignKey("ConfigurationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Configuration");
+                    b.Navigation("Configurations");
                 });
 
             modelBuilder.Entity("RevitBatchExporter.EntityFramework.Dtos.ConfigurationDto", b =>

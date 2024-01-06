@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RevitBatchExporter.Domain.Models;
+using RevitBatchExporter.Domain.Queries;
 using RevitBatchExporter.EntityFramework;
 using RevitBatchExporter.EntityFramework.Dtos;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitBatchExporter.Domain.Queries
+namespace RevitBatchExporter.EntityFramework.Queries
 {
     public class GetAllLogFilesQuery : IGetAllLogFilesQuery
     {
@@ -26,7 +27,7 @@ namespace RevitBatchExporter.Domain.Queries
 
                 return logFileDtos.Select(y => new LogFile()
                 {
-                   Configuration = y.Configuration,
+                   Configurations = y.Configurations,
                    ErrorsOccured = y.ErrorsOccured,
                    LogFilePath = y.LogFilePath,
                    Projects = y.Projects,

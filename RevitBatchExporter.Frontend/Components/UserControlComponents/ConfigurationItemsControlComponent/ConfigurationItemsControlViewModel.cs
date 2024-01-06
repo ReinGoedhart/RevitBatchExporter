@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using static RevitBatchExporter.Domain.Enums.Enums;
+using RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDataGridComponent;
+using RevitBatchExporter.Frontend.Services;
 
 namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ConfigurationItemsControlComponent
 {
@@ -18,7 +20,6 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
         private ConfigurationsStore _configurationsStore;
         private DeleteObjectsStore _deleteObjectsStore;
 
-        List<Configuration> SeedDataForConfigurationsList { get; set; }
 
         public ConfigurationItemsControlViewModel(SelectedConfigurationStore selectedConfigurationStore, ConfigurationsStore configurationsStore, DeleteObjectsStore deleteObjectsStore)
         {
@@ -28,36 +29,43 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
             _configurationItemsControlItemViewModel = new ObservableCollection<ConfigurationItemsControlItemViewModel>();
             SetActiveConfiguration = new SetActiveConfigurationCommand(_selectedConfigurationStore);
 
-            SeedDataForConfigurationsList = new List<Configuration>();
-            SeedDataForConfigurations();
+            LoadConfigurationsCommand = new LoadConfigurationsCommand(configurationsStore);
 
-            PopulateAndCategoriseConfigurations();
 
             _configurationsStore.ConfigurationCreated += OnCreatedConfiguration;
             _deleteObjectsStore.OnDeleteConfiguration += OnDeleteConfiguration;
+            _configurationsStore.ConfigurationsLoaded += _configurationsStore_ConfigurationsLoaded;
         }
+
+        private void _configurationsStore_ConfigurationsLoaded()
+        {
+            PopulateAndCategoriseConfigurations();
+        }
+
+        public static ConfigurationItemsControlViewModel LoadViewModel(SelectedConfigurationStore selectedConfigurationStore, ConfigurationsStore configurationsStore, DeleteObjectsStore deleteObjectsStore)
+        {
+            ConfigurationItemsControlViewModel viewModel = new ConfigurationItemsControlViewModel(selectedConfigurationStore, configurationsStore, deleteObjectsStore);
+            viewModel.LoadConfigurationsCommand.Execute(null);
+            return viewModel;
+        }
+        public ICommand LoadConfigurationsCommand { get; }
 
         public override void Dispose()
         {
             _configurationsStore.ConfigurationCreated -= OnCreatedConfiguration;
             _deleteObjectsStore.OnDeleteConfiguration -= OnDeleteConfiguration;
+            _configurationsStore.ConfigurationsLoaded -= _configurationsStore_ConfigurationsLoaded;
             base.Dispose();
         }
 
         private void OnDeleteConfiguration()
         {
-            Configuration? selectedConfiguration = _selectedConfigurationStore.SelectedConfiguration;
-            if (selectedConfiguration != null)
-            {
-                SeedDataForConfigurationsList.Remove(selectedConfiguration);
-                PopulateAndCategoriseConfigurations();
-            }
+            new ConfigurationItemsControlViewModel(_selectedConfigurationStore, _configurationsStore, _deleteObjectsStore);
         }
 
         private void OnCreatedConfiguration(Configuration configuration)
         {
-            SeedDataForConfigurationsList.Add(configuration);
-            PopulateAndCategoriseConfigurations();
+            new ConfigurationItemsControlViewModel(_selectedConfigurationStore, _configurationsStore, _deleteObjectsStore);
         }
 
         // Commands
@@ -66,7 +74,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
         public void PopulateAndCategoriseConfigurations()
         {
             _configurationItemsControlItemViewModel.Clear();
-            var list = SeedDataForConfigurationsList.GroupBy(c => c.RevitVersion).OrderBy(g => g.Key).ToList();
+            var list = _configurationsStore.Configurations.GroupBy(c => c.RevitVersion).OrderBy(g => g.Key).ToList();
 
             foreach (var item in list)
             {
@@ -74,16 +82,5 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
                 _configurationItemsControlItemViewModel.Add(itemsControlItem);
             }
         }
-
-        private void SeedDataForConfigurations()
-        {
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 1, ConfigurationName = "Rein", RevitVersion = RevitRelease.Revit2021 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 2, ConfigurationName = "Coen", RevitVersion = RevitRelease.Revit2022 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 3, ConfigurationName = "Jolie", RevitVersion = RevitRelease.Revit2023 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Jan", RevitVersion = RevitRelease.Revit2024 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Caroline", RevitVersion = RevitRelease.Revit2020 });
-            SeedDataForConfigurationsList.Add(new Configuration() { Id = 4, ConfigurationName = "Aniek", RevitVersion = RevitRelease.Revit2021 });
-        }
-
     }
 }

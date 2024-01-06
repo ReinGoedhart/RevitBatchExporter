@@ -1,4 +1,5 @@
-﻿using RevitBatchExporter.Domain.Models;
+﻿using RevitBatchExporter.Domain.Commands;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.EntityFramework;
 using RevitBatchExporter.EntityFramework.Dtos;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitBatchExporter.Domain.Commands
+namespace RevitBatchExporter.EntityFramework.Commands
 {
     public class UpdateLogFileCommand : IUpdateLogFileCommand
     {
@@ -24,7 +25,7 @@ namespace RevitBatchExporter.Domain.Commands
                 LogFileDto logFileDto = new LogFileDto()
                 {
                     LogFilePath = logFile.LogFilePath,
-                    Configuration = logFile.Configuration,
+                    Configurations = logFile.Configurations,
                     ErrorsOccured = logFile.ErrorsOccured,
                     Projects = logFile.Projects,
                 };

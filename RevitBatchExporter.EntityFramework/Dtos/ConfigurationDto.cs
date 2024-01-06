@@ -16,4 +16,7 @@ namespace RevitBatchExporter.EntityFramework.Dtos
         public List<Project> Projects { get; set; }
         public bool IsVisible { get; set; }
     }
+
+    
+
 }

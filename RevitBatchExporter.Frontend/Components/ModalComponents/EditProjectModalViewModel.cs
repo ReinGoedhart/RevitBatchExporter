@@ -17,17 +17,20 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
     {
         public List<RevitExportType> ExportTypes => Enum.GetValues(typeof(RevitExportType)).Cast<RevitExportType>().ToList();
         private SelectedProjectStore _selectedProjectStore { get; set; }
+        private ProjectsStore _projectsStore { get; set; }
         public Project EditingProject { get; set; }
         public ICommand EditProject { get; }
         public ICommand ChooseConfigurationJson { get; }
         public ICommand Cancel { get; }
-        public EditProjectModalViewModel(INavigationService cancel, SelectedProjectStore selectedProjectStore)
+        public EditProjectModalViewModel(INavigationService cancel, SelectedProjectStore selectedProjectStore, ProjectsStore projectsStore )
         {
             _selectedProjectStore = selectedProjectStore;
+            _projectsStore = projectsStore;
             EditProject = new RelayCommand(() => 
             { 
                 cancel.Navigate(); 
-                _selectedProjectStore.ProjectEdited(EditingProject); 
+                _selectedProjectStore.ProjectEdited(EditingProject);
+                _projectsStore.Update(EditingProject);
             });
             Cancel = new RelayCommand(() => { cancel.Navigate(); });
             _selectedProjectStore.selectedProjectChanged += SelectedProjectStore_selectedProjectChanged;

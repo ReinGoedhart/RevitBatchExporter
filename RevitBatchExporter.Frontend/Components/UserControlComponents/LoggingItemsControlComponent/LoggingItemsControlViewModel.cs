@@ -52,7 +52,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingIt
             {
                 LogFile file1 = new LogFile()
                 {
-                    Configuration = new Configuration() { ConfigurationName = "config" + i.ToString() },
+                    Configurations = new Configuration() { ConfigurationName = "config" + i.ToString() },
                     ErrorsOccured = 3,
                     LogFilePath = "C://asdasdasd"
                 };

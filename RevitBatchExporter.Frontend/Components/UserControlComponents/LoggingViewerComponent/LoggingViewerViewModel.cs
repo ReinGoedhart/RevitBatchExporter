@@ -50,7 +50,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingVi
 
         private void _selectedLogFileStore_selectedLogFileChanged(LogFile logFile)
         {
-            ConfigurationName = logFile.Configuration.ConfigurationName;
+            ConfigurationName = logFile.Configurations.ConfigurationName;
             OnPropertyChanged(nameof(ConfigurationName));
         }
     }

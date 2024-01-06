@@ -1,4 +1,5 @@
-﻿using RevitBatchExporter.Domain.Models;
+﻿using RevitBatchExporter.Domain.Commands;
+using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.EntityFramework;
 using RevitBatchExporter.EntityFramework.Dtos;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitBatchExporter.Domain.Commands
+namespace RevitBatchExporter.EntityFramework.Commands
 {
     public class UpdateConfigurationCommand : IUpdateConfigurationCommand
     {
@@ -29,10 +30,8 @@ namespace RevitBatchExporter.Domain.Commands
                     Projects = configuration.Projects,
                     RevitVersion = configuration.RevitVersion,
                 };
-
-                context.configurations.Update(configurationDto);
+                context.Configurations.Update(configurationDto);
                 await context.SaveChangesAsync();
-
             }
         }
     }

@@ -30,7 +30,6 @@ namespace RevitBatchExporter.Frontend.Components.ModalComponents
             DeleteProjects = new RelayCommand(DeleteObject); // create Logic
             Cancel = new RelayCommand(() => { _cancelNavigationService.Navigate(); });
         }
-
         public void DeleteObject()
         {
             _deleteObjectsStore.DeleteObjects(_classType);

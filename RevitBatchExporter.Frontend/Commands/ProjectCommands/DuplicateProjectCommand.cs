@@ -21,16 +21,10 @@ namespace RevitBatchExporter.Frontend.Commands.ProjectCommands
         public override void Execute(object parameter)
         {
             List<ProjectDataGridItemViewModel> checkedProjects = _projectViewModel.ProjectDataGridViewModel._checkedProjects;
-
             foreach (ProjectDataGridItemViewModel project in checkedProjects)
             {
                 _projectViewModel.ProjectDataGridViewModel.DuplicateProject(project);
             }
-            //InteractionWith Database
-
-
-
-
         }
     }
 }

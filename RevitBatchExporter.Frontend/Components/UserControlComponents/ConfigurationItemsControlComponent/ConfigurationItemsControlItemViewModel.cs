@@ -23,7 +23,6 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
         {
             Version = $"Revit {groupedConfigs.Key}";
             Configurations = new ObservableCollection<Configuration>(groupedConfigs);
-
         }
     }
 }

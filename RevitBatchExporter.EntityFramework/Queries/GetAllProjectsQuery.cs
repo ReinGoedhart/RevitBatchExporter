@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RevitBatchExporter.Domain.Models;
+using RevitBatchExporter.Domain.Queries;
 using RevitBatchExporter.EntityFramework;
 using RevitBatchExporter.EntityFramework.Dtos;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitBatchExporter.Domain.Queries
+namespace RevitBatchExporter.EntityFramework.Queries
 {
     public class GetAllProjectsQuery : IGetAllProjectsQuery
     {
@@ -22,7 +23,7 @@ namespace RevitBatchExporter.Domain.Queries
         {
             using (RevitBatchExporterDbContext context = _contextFactory.Create())
             {
-                IEnumerable<ProjectDto> projectDtos = await context.Projects.ToListAsync();
+                IEnumerable<ProjectDto> projectDtos = await context.Projects.Where(x=> x.IsVisible == true).ToListAsync();
 
                 return projectDtos.Select(y => new Project()
                 {

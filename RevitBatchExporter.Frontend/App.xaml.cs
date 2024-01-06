@@ -12,6 +12,8 @@ using RevitBatchExporter.Domain.Queries;
 using RevitBatchExporter.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using RevitBatchExporter.EntityFramework.Commands;
+using RevitBatchExporter.EntityFramework.Queries;
 
 namespace RevitBatchExporter.Frontend
 {
@@ -88,7 +90,6 @@ namespace RevitBatchExporter.Frontend
             {
                 context.Database.Migrate();
             }
-
             INavigationService homeNaviationService = CreateHomeViewModel();
             homeNaviationService.Navigate();
 
@@ -152,11 +153,11 @@ namespace RevitBatchExporter.Frontend
         private INavigationService CreateConfigurationModalViewModel()
         {
             CompositeNavigationService CreateConfigurationAndNavigate = new CompositeNavigationService(new CloseModalNavigationService(_modalNavigationStore), CreateConfigurationViewModel());
-            return new ModalNavigationService<CreateConfigurationModalViewModel>(_modalNavigationStore, () => new CreateConfigurationModalViewModel(CreateConfigurationAndNavigate, CreateCancelCompositeNavigationService(), _configurationsStore));
+            return new ModalNavigationService<CreateConfigurationModalViewModel>(_modalNavigationStore, () => new CreateConfigurationModalViewModel(CreateConfigurationAndNavigate, CreateCancelCompositeNavigationService(), _configurationsStore, _selectedProjectStore));
         }
         private INavigationService CreateEditProjectModalViewModel()
         {
-            return new ModalNavigationService<EditProjectModalViewModel>(_modalNavigationStore, () => new EditProjectModalViewModel(CreateCancelCompositeNavigationService(), _selectedProjectStore));
+            return new ModalNavigationService<EditProjectModalViewModel>(_modalNavigationStore, () => new EditProjectModalViewModel(CreateCancelCompositeNavigationService(), _selectedProjectStore, _projectsStore));
         }
         private INavigationService CreateErrorModalViewModel()
         {

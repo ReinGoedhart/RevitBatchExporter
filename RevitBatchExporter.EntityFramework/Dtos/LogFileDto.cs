@@ -10,7 +10,7 @@ namespace RevitBatchExporter.EntityFramework.Dtos
     public class LogFileDto
     {
         public int Id { get; set; }
-        public Configuration Configuration { get; set; }
+        public Configuration Configurations { get; set; }
         public List<Project> Projects { get; set; }
         public string? LogFilePath { get; set; }
         public int ErrorsOccured { get; set; }

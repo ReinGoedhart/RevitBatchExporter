@@ -15,7 +15,7 @@
                     Content="Create Configuration"
                     FontSize="25"
                     Foreground="White" />
-                <TextBox Style="{StaticResource ConfigurationTextBox}" Text="{Binding ConfigurationNameText}" />
+                <TextBox Style="{StaticResource ConfigurationTextBox}" Text="{Binding ConfigurationNameText, UpdateSourceTrigger=PropertyChanged}" />
 
                 <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
                     <Button

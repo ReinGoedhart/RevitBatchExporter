@@ -23,9 +23,12 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.Configura
         {
             _selectedConfigurationStore = selectedConfigurationStore;
             _configurationProjectListingItemViewModel = new ObservableCollection<ConfigurationListItemViewModel>();
-            
             _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
         }
+
+        
+
+
         public override void Dispose()
         {
             _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;

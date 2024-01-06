@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RevitBatchExporter.Domain.Models;
+using RevitBatchExporter.Domain.Queries;
 using RevitBatchExporter.EntityFramework;
 using RevitBatchExporter.EntityFramework.Dtos;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitBatchExporter.Domain.Queries
+namespace RevitBatchExporter.EntityFramework.Queries
 {
     public class GetAllConfigurationsQuery : IGetAllConfigurationsQuery
     {
@@ -22,7 +23,7 @@ namespace RevitBatchExporter.Domain.Queries
         {
             using (RevitBatchExporterDbContext context = _contextFactory.Create())
             {
-                IEnumerable<ConfigurationDto> configurationFileDtos = await context.configurations.ToListAsync();
+                IEnumerable<ConfigurationDto> configurationFileDtos = await context.Configurations.ToListAsync();
 
                 return configurationFileDtos.Select(y => new Configuration()
                 {

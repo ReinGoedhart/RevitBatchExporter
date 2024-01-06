@@ -1,6 +1,7 @@
 ﻿using RevitBatchExporter.Domain.Commands;
 using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.Domain.Queries;
+using RevitBatchExporter.Frontend.Stores.CRUDBaseClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RevitBatchExporter.Frontend.Stores
 {
-    public class ProjectsStore
+    public class ProjectsStore: CrudBase<Project>
     {
         private readonly IGetAllProjectsQuery _getAllProjectsQuery;
         private readonly ICreateProjectCommand _createProjectCommand;
@@ -36,17 +37,16 @@ namespace RevitBatchExporter.Frontend.Stores
         public event Action<int> ProjectDeleted;
         public event Action<Project> ProjectUpdated;
         public event Action<IEnumerable<Project>> GetAllProjects;
-
         public event Action ProjectsLoaded;
 
-        public async Task Create(Project project)
+        public override async Task Create(Project project)
         {
             _projects.Add(project);
 
             await _createProjectCommand.Execute(project);
             ProjectCreated?.Invoke(project);
         }
-        public async Task Update(Project project)
+        public override async Task Update(Project project)
         {
             int currentIndex = _projects.FindIndex(x => x.Id == project.Id);
             if (currentIndex == -1)
@@ -61,7 +61,7 @@ namespace RevitBatchExporter.Frontend.Stores
             await _updateProjectCommand.Execute(project);
             ProjectUpdated?.Invoke(project);
         }
-        public async Task Deleted(Project project)
+        public override async Task Deleted(Project project)
         {
             int currentIndex = _projects.FindIndex(x => x.Id == project.Id);
             if (currentIndex == -1)
@@ -69,11 +69,10 @@ namespace RevitBatchExporter.Frontend.Stores
                 _projects.Remove(project);
             }
 
-            await _deleteProjectCommand.Execute(project.Id);
+            await _deleteProjectCommand.Execute(project);
             ProjectDeleted?.Invoke(project.Id);
         }
-
-        public async Task Load()
+        public override async Task Load()
         {
             var projects = await _getAllProjectsQuery.Execute();
 

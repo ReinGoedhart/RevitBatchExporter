@@ -9,7 +9,7 @@ namespace RevitBatchExporter.Domain.Models
     public class LogFile
     {
         public int Id { get; }
-        public Configuration Configuration { get; set; }
+        public Configuration Configurations { get; set; }
         public List<Project> Projects { get; set; }
         public string LogFilePath { get; set; }
         public int ErrorsOccured { get; set; }

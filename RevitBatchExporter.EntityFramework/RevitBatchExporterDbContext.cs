@@ -11,8 +11,7 @@ namespace RevitBatchExporter.EntityFramework
     public class RevitBatchExporterDbContext: DbContext
     {
         public RevitBatchExporterDbContext(DbContextOptions options) : base(options) { }
-        
-        public DbSet<ConfigurationDto> configurations {  get; set; }
+        public DbSet<ConfigurationDto> Configurations {  get; set; }
         public DbSet<LogFileDto> LogFiles { get; set;}
         public DbSet<ProjectDto> Projects { get; set; }
     }

@@ -41,9 +41,19 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
 
             LoadProjectsCommand = new LoadProjectsCommand(projectStore);
 
+            
+
             _deleteObjectsStore.OnDeleteProject += OnDeletedProjects;
             _selectedProjectStore.ProjectIsEdited += _selectedProjectStore_ProjectIsEdited;
             _projectStore.ProjectsLoaded += ProjectStore_ProjectsLoaded;
+        }
+
+        public ICommand LoadProjectsCommand { get; }
+        public static ProjectDataGridViewModel LoadViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, ProjectsStore projectStore, INavigationService createEditProjectModalNavigationService)
+        {
+            ProjectDataGridViewModel viewModel = new ProjectDataGridViewModel(selectedProjectStore, errorMessagesStore, deleteObjectsStore, projectStore, createEditProjectModalNavigationService);
+            viewModel.LoadProjectsCommand.Execute(null);
+            return viewModel;
         }
 
         private void ProjectStore_ProjectsLoaded()
@@ -53,23 +63,20 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
             foreach (var project in _projectStore.projects)
             {
                 var dataGridItem = new ProjectDataGridItemViewModel(project, _selectedProjectStore, _createEditProjectModalNavigationService);
+                dataGridItem.OnIsCheckedChanged += GridItem_OnIsCheckedChanged;
                 _projectDataGridItemViewModel.Add(dataGridItem);
             }
         }
-
-        public static ProjectDataGridViewModel LoadViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, ProjectsStore projectStore, INavigationService createEditProjectModalNavigationService)
-        {
-            ProjectDataGridViewModel viewModel = new ProjectDataGridViewModel(selectedProjectStore, errorMessagesStore, deleteObjectsStore, projectStore, createEditProjectModalNavigationService);
-            viewModel.LoadProjectsCommand.Execute(null);
-            return viewModel;
-        }
-
-        public ICommand LoadProjectsCommand { get; }
 
         public override void Dispose()
         {
             _deleteObjectsStore.OnDeleteProject -= OnDeletedProjects;
             _selectedProjectStore.ProjectIsEdited -= _selectedProjectStore_ProjectIsEdited;
+            foreach (var dataGridItem in _projectDataGridItemViewModel)
+            {
+                dataGridItem.OnIsCheckedChanged -= GridItem_OnIsCheckedChanged;
+            }
+
             base.Dispose();
         }
 
@@ -80,6 +87,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
 
         private void OnDeletedProjects()
         {
+
             List<ProjectDataGridItemViewModel> itemsToRemove = new List<ProjectDataGridItemViewModel>();
 
             foreach (var projectItem in _projectDataGridItemViewModel)
@@ -93,9 +101,14 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
             foreach (var itemToRemove in itemsToRemove)
             {
                 _projectDataGridItemViewModel.Remove(itemToRemove);
+                if (itemToRemove != null)
+                {
+                    _projectStore.Deleted(itemToRemove.Project);
+                }
             }
 
             _checkedProjects.Clear();
+            _selectedProjectStore.CheckedProjects.Clear();
         }
 
         public void DuplicateProject(ProjectDataGridItemViewModel ProjectDataGridItemViewModel)
@@ -117,6 +130,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
                 ViewName = project.ViewName,
             };
 
+            _projectStore.Create(duplicatedProject);
             ProjectDataGridItemViewModel DuplicatedProject = new ProjectDataGridItemViewModel(duplicatedProject, _selectedProjectStore, _createEditProjectModalNavigationService);
 
             _projectDataGridItemViewModel.Add(DuplicatedProject);
@@ -149,6 +163,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
                     if (!_checkedProjects.Contains(dataGridItem))
                     {
                         _checkedProjects.Add(dataGridItem);
+                        _selectedProjectStore.AddProject(dataGridItem.Project);
                     }
                 }
                 else
@@ -156,6 +171,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.ProjectDa
                     if (_checkedProjects.Contains(dataGridItem))
                     {
                         _checkedProjects.Remove(dataGridItem);
+                        _selectedProjectStore.RemoveProject(dataGridItem.Project);
                     }
                 }
             }

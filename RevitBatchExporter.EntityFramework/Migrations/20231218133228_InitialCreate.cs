@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RevitBatchExporter.EntityFramework.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "configurations",
+                name: "Configurations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -21,7 +21,7 @@ namespace RevitBatchExporter.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_configurations", x => x.Id);
+                    table.PrimaryKey("PK_Configurations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +75,7 @@ namespace RevitBatchExporter.EntityFramework.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ConfigurationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ConfigurationsId = table.Column<int>(type: "INTEGER", nullable: false),
                     LogFilePath = table.Column<string>(type: "TEXT", nullable: true),
                     ErrorsOccured = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -83,8 +83,8 @@ namespace RevitBatchExporter.EntityFramework.Migrations
                 {
                     table.PrimaryKey("PK_LogFiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LogFiles_Configuration_ConfigurationId",
-                        column: x => x.ConfigurationId,
+                        name: "FK_LogFiles_Configuration_ConfigurationsId",
+                        column: x => x.ConfigurationsId,
                         principalTable: "Configuration",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -115,9 +115,9 @@ namespace RevitBatchExporter.EntityFramework.Migrations
                 {
                     table.PrimaryKey("PK_Project", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Project_configurations_ConfigurationDtoId",
+                        name: "FK_Project_Configurations_ConfigurationDtoId",
                         column: x => x.ConfigurationDtoId,
-                        principalTable: "configurations",
+                        principalTable: "Configurations",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Project_LogFiles_LogFileDtoId",
@@ -161,9 +161,9 @@ namespace RevitBatchExporter.EntityFramework.Migrations
                 column: "ProjectsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LogFiles_ConfigurationId",
+                name: "IX_LogFiles_ConfigurationsId",
                 table: "LogFiles",
-                column: "ConfigurationId");
+                column: "ConfigurationsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Project_ConfigurationDtoId",
@@ -185,7 +185,7 @@ namespace RevitBatchExporter.EntityFramework.Migrations
                 name: "Project");
 
             migrationBuilder.DropTable(
-                name: "configurations");
+                name: "Configurations");
 
             migrationBuilder.DropTable(
                 name: "LogFiles");

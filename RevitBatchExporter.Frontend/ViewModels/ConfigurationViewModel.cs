@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using RevitBatchExporter.Frontend.Commands.ProjectCommands;
 
 namespace RevitBatchExporter.Frontend.ViewModels
 {
@@ -48,7 +49,9 @@ namespace RevitBatchExporter.Frontend.ViewModels
             _errorMessagesStore = errorMessagesStore;
 
             ConfigurationListingViewModel = new ConfigurationListViewModel(_selectedConfigurationStore);
-            ConfigurationItemsControlViewModel = new ConfigurationItemsControlViewModel(_selectedConfigurationStore, configurationsStore, _deleteObjectsStore);
+            ConfigurationItemsControlViewModel = ConfigurationItemsControlViewModel.LoadViewModel(_selectedConfigurationStore, configurationsStore, _deleteObjectsStore);
+
+
 
             DeleteConfiguration = new DeleteConfigurationCommand(this, _deleteModalNavigationService);
             BeginExport = new BeginExportCommand(this, _errorMessagesStore, _exportModalNavigationService, _errorModalNavigationService);
@@ -56,6 +59,7 @@ namespace RevitBatchExporter.Frontend.ViewModels
             _selectedConfigurationStore.ConfigurationChanged += OnConfigurationChanged;
             _deleteObjectsStore.OnDeleteConfiguration += _deleteObjectsStore_OnDeleteConfiguration;
         }
+
 
         private void _deleteObjectsStore_OnDeleteConfiguration()
         {

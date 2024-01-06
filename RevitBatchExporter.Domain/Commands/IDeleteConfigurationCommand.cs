@@ -8,6 +8,6 @@ namespace RevitBatchExporter.Domain.Commands
 {
     public interface IDeleteConfigurationCommand
     {
-        Task Execute(int configurationId);
+        Task Execute(Configuration configuration);
     }
 }

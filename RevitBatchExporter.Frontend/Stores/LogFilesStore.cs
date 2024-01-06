@@ -8,17 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RevitBatchExporter.Frontend.Stores.CRUDBaseClass;
 
 namespace RevitBatchExporter.Frontend.Stores
 {
-    public class LogFilesStore
+    public class LogFilesStore: CrudBase<LogFile>
     {
-
-
         private readonly IGetAllLogFilesQuery _getAllLogFilesQuery;
         private readonly IUpdateLogFileCommand _updateLogFileCommand;
         private readonly ICreateLogFileCommand _createLogFileCommand;
         private readonly IDeleteLogFileCommand _deleteLogFileCommand;
+
+        private readonly List<LogFile> _logFiles;
+        public IEnumerable<LogFile> projects => _logFiles;
 
         public LogFilesStore(IGetAllLogFilesQuery getAllLogFilesQuery, ICreateLogFileCommand createLogFileCommand, IDeleteLogFileCommand deleteLogFileCommand, IUpdateLogFileCommand updateLogFileCommand)
         {
@@ -31,26 +33,31 @@ namespace RevitBatchExporter.Frontend.Stores
         public event Action<LogFile> LogFileCreated;
         public event Action<LogFile> LogFileUpdated;
         public event Action<int> LogFileDeleted;
+        public event Action<IEnumerable<LogFile>> GetAllLogFiles;
+        public event Action LogFilesLoaded;
 
-        public async Task Create(LogFile logFile)
+        public override async Task Create(LogFile logFile)
         {
             await _createLogFileCommand.Execute(logFile);
             LogFileCreated?.Invoke(logFile);
         }
-        public async Task Update(LogFile logFile)
+        public override async Task Update(LogFile logFile)
         {
             await _updateLogFileCommand.Execute(logFile);
             LogFileUpdated?.Invoke(logFile);
         }
-        public async Task Deleted(LogFile logFile)
+        public override async Task Deleted(LogFile logFile)
         {
             await _deleteLogFileCommand.Execute(logFile.Id);
             LogFileDeleted?.Invoke(logFile.Id);
         }
 
-        public async Task Load()
+        public override async Task Load()
         {
             var logFiles = await _getAllLogFilesQuery.Execute();
+            _logFiles.Clear();
+            _logFiles.AddRange(projects);
+            LogFilesLoaded?.Invoke();
         }
     }
 }

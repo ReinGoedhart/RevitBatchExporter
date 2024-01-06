@@ -9,6 +9,20 @@ namespace RevitBatchExporter.Frontend.Stores
 {
     public class SelectedProjectStore
     {
+        public List<Project> CheckedProjects { get; set; }
+
+        public void AddProject(Project project)
+        {
+            CheckedProjects.Add(project);
+        }
+        public void RemoveProject(Project project)
+        {
+            CheckedProjects.Remove(project);
+        }
+        public SelectedProjectStore()
+        {
+            CheckedProjects = new List<Project>();  
+        }
         public Project CurrentSelectedProject { get; set; }
         public event Action<Project> selectedProjectChanged;
         public void CurrentProject(Project selectedProject)

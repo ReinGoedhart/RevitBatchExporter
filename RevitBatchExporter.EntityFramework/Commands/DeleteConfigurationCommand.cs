@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using RevitBatchExporter.Domain.Commands;
 using RevitBatchExporter.Domain.Models;
 using RevitBatchExporter.EntityFramework;
 using RevitBatchExporter.EntityFramework.Dtos;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RevitBatchExporter.Domain.Commands
+namespace RevitBatchExporter.EntityFramework.Commands
 {
     public class DeleteConfigurationCommand : IDeleteConfigurationCommand
     {
@@ -18,17 +19,22 @@ namespace RevitBatchExporter.Domain.Commands
             _contextFactory = contextFactory;
         }
 
-        public async Task Execute(int configurationId)
+        public async Task Execute(Configuration configuration)
         {
             using (RevitBatchExporterDbContext context = _contextFactory.Create())
             {
                 ConfigurationDto configurationDto = new ConfigurationDto()
                 {
-                    Id = configurationId,
+                    Id = configuration.Id,
+                    ConfigurationName = configuration.ConfigurationName,
+                    IsVisible = false,
+                    Projects = configuration.Projects,
+                    RevitVersion = configuration.RevitVersion,
                 };
 
-                context.configurations.Remove(configurationDto);
+                context.Configurations.Update(configurationDto);
                 await context.SaveChangesAsync();
+
             }
         }
     }

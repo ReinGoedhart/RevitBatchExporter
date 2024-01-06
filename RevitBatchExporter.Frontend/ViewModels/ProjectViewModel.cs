@@ -19,30 +19,49 @@ namespace RevitBatchExporter.Frontend.ViewModels
         public ICommand DeleteModal { get; }
         public ICommand CreateConfigurationModal { get; }
         public ICommand DuplicateProject { get; }
+        public ICommand RefreshData { get; }
 
-        public INavigationService _createConfigurationModalNavigationService;
-        public INavigationService _errorModalNavigationService;
+        private INavigationService _createConfigurationModalNavigationService;
+        private INavigationService _errorModalNavigationService;
+        private INavigationService _deleteModalNavigationService;
+        private INavigationService _editProjectModalNavigationService;
         private ErrorMessagesStore _errorMessagesStore;
+
+        private SelectedProjectStore _selectedProjectStore;
+        private DeleteObjectsStore _deleteObjectsStore;
+        private ProjectsStore _projectStore;
+
 
         public ProjectViewModel(SelectedProjectStore selectedProjectStore, ErrorMessagesStore errorMessagesStore, DeleteObjectsStore deleteObjectsStore, ProjectsStore projectStore, INavigationService deleteModalNavigationService, INavigationService createConfigurationModalNavigationService, INavigationService editProjectModalNavigationService, INavigationService errorModalNavigationService)
         {
             _errorMessagesStore = errorMessagesStore;
             _createConfigurationModalNavigationService = createConfigurationModalNavigationService;
             _errorModalNavigationService = errorModalNavigationService;
+            _selectedProjectStore = selectedProjectStore;
+            _projectStore = projectStore;
+            _deleteObjectsStore = deleteObjectsStore;
+            _editProjectModalNavigationService = editProjectModalNavigationService;
 
-            ProjectDataGridViewModel = ProjectDataGridViewModel.LoadViewModel(selectedProjectStore, errorMessagesStore, deleteObjectsStore, projectStore, editProjectModalNavigationService);
+
+            ProjectDataGridViewModel = ProjectDataGridViewModel.LoadViewModel(_selectedProjectStore, _errorMessagesStore, _deleteObjectsStore, _projectStore, _editProjectModalNavigationService);
 
             DuplicateProject = new DuplicateProjectCommand(this);
             DeleteModal = new NavigateCommand(deleteModalNavigationService);
             CreateConfigurationModal = new CreateConfigurationModalCommand(_errorMessagesStore, _errorModalNavigationService, _createConfigurationModalNavigationService, ProjectDataGridViewModel);
+            RefreshData = new RelayCommand(RefreshDataCommand);
         }
+
+        private void RefreshDataCommand()
+        {
+            ProjectDataGridViewModel = ProjectDataGridViewModel.LoadViewModel(_selectedProjectStore, _errorMessagesStore, _deleteObjectsStore, _projectStore, _editProjectModalNavigationService);
+        }
+
 
         public override void Dispose()
         {
             ProjectDataGridViewModel.Dispose();
             base.Dispose();
         }
-
         private string _searchString;
         public string SearchString
         {
@@ -57,6 +76,5 @@ namespace RevitBatchExporter.Frontend.ViewModels
                 OnPropertyChanged(nameof(SearchString));
             }
         }
-
     }
 }

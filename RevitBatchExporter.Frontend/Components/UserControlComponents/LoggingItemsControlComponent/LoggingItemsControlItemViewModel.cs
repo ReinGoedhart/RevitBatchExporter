@@ -15,7 +15,7 @@ namespace RevitBatchExporter.Frontend.Components.UserControlComponents.LoggingIt
     public class LoggingItemsControlItemViewModel : ViewModelBase
     {
         public LogFile LogFile { get; set; }
-        public string ConfigurationName => LogFile.Configuration.ConfigurationName;
+        public string ConfigurationName => LogFile.Configurations.ConfigurationName;
         public int ErrorsOccured => LogFile.ErrorsOccured;
         public DateTime DateTime { get; set; }
         public ICommand LogSelected { get; }
